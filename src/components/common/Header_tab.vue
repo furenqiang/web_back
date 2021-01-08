@@ -1,10 +1,12 @@
 <template>
-    <el-tabs v-model="editableTabsValue" type="card" closable @edit="handleTabsEdit">
+    <el-tabs v-model="editableTabsValue" type="card" closable @edit="handleTabsEdit" @tab-click="handleClick">
       <el-tab-pane
         :key="item.name"
         v-for="(item) in editableTabs"
         :label="item.title"
         :name="item.name"
+        :defaultActive="item.index"
+        :path="item.path"
       >
       </el-tab-pane>
     </el-tabs>
@@ -21,29 +23,24 @@
   export default {
     data() {
       return {
-        editableTabsValue: '2',
-        editableTabs: [{
-          title: 'Tab 1',
-          name: '1',
-          content: 'Tab 1 content'
-        }, {
-          title: 'Tab 2',
-          name: '2',
-          content: 'Tab 2 content'
-        }],
-        tabIndex: 2
+        editableTabs: this.$store.state.headerTab.editableTabs
       }
     },
     methods: {
+      handleClick(tab, event) {
+        this.$store.commit({
+            type:'handleDefaultActive',
+            tab:{
+              index: tab.$attrs.defaultActive
+            }
+          })
+        this.$router.push({
+          path:tab.$attrs.path
+        })
+      },
       handleTabsEdit(targetName, action) {
-        if (action === 'add') {
-          let newTabName = ++this.tabIndex + '';
-          this.editableTabs.push({
-            title: 'New Tab',
-            name: newTabName,
-            content: 'New Tab content'
-          });
-          this.editableTabsValue = newTabName;
+        if(targetName==0){
+          return;
         }
         if (action === 'remove') {
           let tabs = this.editableTabs;
@@ -58,11 +55,47 @@
               }
             });
           }
-          
           this.editableTabsValue = activeName;
           this.editableTabs = tabs.filter(tab => tab.name !== targetName);
+          this.$store.commit({
+            type:'handleTabsRemove',
+            tab:{
+              name: targetName
+          }
+          })
         }
       }
+    },
+    watch: {
+    '$store.state.headerTab.editableTabs': function () {
+      //你需要执行的代码
+      this.editableTabs=this.$store.state.headerTab.editableTabs
+      this.editableTabsValue=this.$store.state.headerTab.editableTabsValue
+      this.tabIndex= this.$store.state.headerTab.tabIndex
     }
+  },
+  computed:{
+    //这里需要把store 动态的数据放到computed里面才会同步更新 视图
+    tabIndex:{
+      get:function(){
+         return this.$store.state.headerTab.tabIndex
+      },
+      set:function(v){
+      } 
+    },
+    editableTabsValue:{
+      get:function(){
+         return this.$store.state.headerTab.editableTabsValue
+      },
+      set:function(v){
+        this.$store.commit({
+        type:'handleTabsEdit',
+        tab:{
+          name: v
+          }
+        })
+      }
+    }
+  }
   }
 </script>

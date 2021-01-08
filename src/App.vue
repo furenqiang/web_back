@@ -5,7 +5,9 @@
     </div>
     <Header></Header>
     <div class="routerView">
-      <router-view />
+      <keep-alive>
+        <router-view />
+      </keep-alive>
     </div>
     <NavMenu></NavMenu>
     <Footer></Footer>
