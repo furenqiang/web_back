@@ -1,16 +1,16 @@
 <template>
   <div id="app">
-    <div class="background">
+    <div class="background" v-show="show">
         <img :src="imgSrc" width="100%" height="100%" alt="" />
     </div>
-    <Header></Header>
+    <Header v-show="show"></Header>
     <div class="routerView">
       <keep-alive>
         <router-view />
       </keep-alive>
     </div>
-    <NavMenu></NavMenu>
-    <Footer></Footer>
+    <NavMenu v-show="show"></NavMenu>
+    <Footer v-show="show"></Footer>
   </div>
 </template>
 
@@ -22,7 +22,8 @@ export default {
   name: "App",
   data() {
     return {
-      imgSrc:require('./assets/img/background.png')
+      imgSrc:require('./assets/img/background.png'),
+      show:false
     };
   },
   components: {

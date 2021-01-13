@@ -14,6 +14,9 @@ export default {
   },
   components: {
   },
+  created(){
+
+  },
   mounted() {
     document.getElementById("home").style.height =
       document.body.clientHeight + "px";
