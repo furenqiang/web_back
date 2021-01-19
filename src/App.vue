@@ -1,16 +1,16 @@
 <template>
   <div id="app">
-    <div class="background" v-show="show">
+    <div class="background" v-if="!show">
         <img :src="imgSrc" width="100%" height="100%" alt="" />
     </div>
-    <Header v-show="show"></Header>
+    <Header v-if="!show"></Header>
     <div class="routerView">
       <keep-alive>
         <router-view />
       </keep-alive>
     </div>
-    <NavMenu v-show="show"></NavMenu>
-    <Footer v-show="show"></Footer>
+    <NavMenu v-if="!show"></NavMenu>
+    <Footer v-if="!show"></Footer>
   </div>
 </template>
 
@@ -22,14 +22,20 @@ export default {
   name: "App",
   data() {
     return {
-      imgSrc:require('./assets/img/background.png'),
-      show:false
+      imgSrc:require('./assets/img/background.png')
     };
   },
   components: {
     NavMenu,
     Footer,
     Header
+  },
+  computed:{
+    show:{
+      get:function(){
+        return this.$store.state.login.show
+      }
+    }
   }
 };
 </script>

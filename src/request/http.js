@@ -2,6 +2,7 @@ import axios from 'axios'; // 引入axios
 import router from "../router/index";
 import QS from 'qs';
 import {Message} from 'element-ui'
+import store from '../store/index'
 
 //1、我们的项目环境可能有开发环境、测试环境和生产环境。我们通过node的环境变量来匹配我们的默认的接口url前缀
 // if (process.env.NODE_ENV == 'dev') {    
@@ -61,31 +62,35 @@ export function post(url, params) {
 
   //5、拦截器，拦截请求后
   axios.interceptors.response.use(response=>{
-  // 如果请求为非200否者默认统一处理
-  if (response.status !== 200) {
+  if(response.data.code===400||
+    response.data.code===404||
+    response.data.code===203||
+    response.data.code===500){
+      Message({
+        message: response.data.message,
+        type: 'error'
+      });
+  }else if(response.data.code===403){
+    router.push({path: '/login'});
+    store.commit({
+      type:'changeLoginShow',
+      show:true
+      })
     Message({
-      message: response,
+      message: response.data.message,
       type: 'error'
     });
   }
     console.log("response success");
     return response;
   },err=>{
-    if(err.response.data.code===400||
-      err.response.data.code===404||
-      err.response.data.code===203||
-      err.response.data.code===500){
-        Message({
-          message: err.response.data.message,
-          type: 'error'
-        });
-    }else if(err.response.data.code===403){
-      router.push({path: '/login'});
-      Message({
-        message: err.response.data.message,
-        type: 'error'
-      });
-    }
+    // 如果请求为非200否者默认统一处理
+  if (err.response.status != 200) {
+    Message({
+      message: "网络异常",
+      type: 'error'
+    });
+  }
     console.log("response error");
     return err;
   })

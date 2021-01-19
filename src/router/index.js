@@ -5,6 +5,7 @@ import home from "../components/home/Home";
 import user from "../components/sysUser/User";
 import login from "../components/login/Login";
 import {test} from "../request/sysApi"
+import store from "../store/index"
 
 Vue.use(Router);
 
@@ -48,9 +49,9 @@ const router= new Router({
 
 export default router
 
-router.beforeEach((to,from,next)=>{
+router.afterEach((to,from)=>{
   if(to.fullPath=="/login"){
-    next()
+    console.log("进入登录页");
   }else{
     test({
       url:"test/testHttp",
@@ -58,7 +59,12 @@ router.beforeEach((to,from,next)=>{
         param:"1"
       }
     }).then((res)=>{
-      console.log(res);
+      if(res===1){
+        store.commit({
+          type:"changeLoginShow",
+          show:false
+        })
+      }
     })
   }
 })

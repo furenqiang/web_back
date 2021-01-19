@@ -1,7 +1,7 @@
 <template>
   <div class="footer">
     <div class="aClass">
-      <a href="" >关于我们</a>
+      <a href="https://furenqiang.github.io">关于我们</a>
     </div>
   </div>
 </template>
@@ -25,7 +25,6 @@
 export default {
   data() {
     return {
-      isCollapse: true
     };
   },
   methods: {

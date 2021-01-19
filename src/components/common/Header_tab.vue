@@ -60,8 +60,9 @@
           this.$store.commit({
             type:'handleTabsRemove',
             tab:{
-              name: targetName
-          }
+              name: targetName,
+              activeName:activeName
+            }
           })
         }
       }
