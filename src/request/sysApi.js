@@ -21,3 +21,7 @@ export const logout = (params) => {
 export const updateUser = (params) => {
      return post(sysApi+params.url,params.data);
 }
+//注册用户信息
+export const register = (params) => {
+     return post(sysApi+params.url,params.data);
+}

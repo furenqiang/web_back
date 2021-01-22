@@ -71,13 +71,13 @@ export default {
   },
   methods: {
     handleOpen(key, keyPath) {
-      console.log(key, keyPath);
+      //console.log(key, keyPath);
     },
     handleClose(key, keyPath) {
-      console.log(key, keyPath);
+      //console.log(key, keyPath);
     },
     handleSelect(key, keyPath){
-      console.log(key, keyPath);
+      //console.log(key, keyPath);
     },
     toPath(children){
       let path=children.path

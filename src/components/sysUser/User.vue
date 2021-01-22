@@ -5,7 +5,7 @@
         <el-button type="primary" icon="el-icon-circle-plus" class="addBtn" @click="register">创建</el-button>
         用户名：<el-input v-model="inputUsername" class="input"></el-input>
         创建人：<el-input v-model="inputCreatorName" class="input"></el-input>
-        <el-button type="primary" icon="el-icon-search" @click="init">搜索</el-button>
+        <el-button type="primary" icon="el-icon-search" @click="search()">搜索</el-button>
       </span>
     </div>
     <div class="tableClass">
@@ -44,8 +44,8 @@
           label="操作"
           width="150px">
           <template slot-scope="scope">
-            <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-            <el-button type="text" size="small">编辑</el-button>
+            <el-button @click="handleClick(scope.row)" type="text" size="small">查看详情</el-button>
+            <el-button @click="handleClick(scope.row)" type="text" size="small">禁用</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -62,25 +62,29 @@
         </el-pagination>
       </div>
     </div>
+    <user-add v-if="userAddShow" :toAddParams=toAddParams></user-add>
   </div>
 </template>
 
 <script>
 import {getUserListByParams} from '../../request/sysApi'
-
+import UserAdd from './UserAdd.vue';
 export default {
   name: "User",
   data() {
     return {
       tableData: [{}],
-      currentPage: 1,
+      currentPage:1,
       pageSize:10,
       total:1,
       inputUsername:"",
-      inputCreatorName:""
+      inputCreatorName:"",
+      userAddShow:false,
+      toAddParams:{}
     };
   },
   components: {
+    UserAdd
   },
   mounted() {
     this.init()
@@ -88,35 +92,45 @@ export default {
   created(){
   },
   methods: {
+    search(){
+      this.currentPage=1
+      this.pageSize=10
+      this.init()
+    },
     init(){
       getUserListByParams({
         url:'sysUser/getUserListByParams',
         data:{
-          page:1,
-          size:10,
+          page:this.currentPage,
+          size:this.pageSize,
           username:this.inputUsername,
           creatorName:this.inputCreatorName
         }
       }).then((res)=>{
-        console.log(res);
+        //console.log(res);
         this.tableData=res.data
         this.total=res.total
-        this.currentPage=(res.data.total/this.pageSize)
       }).catch((err)=>{
-        console.log(err);
+        //console.log(err);
       })
     },
     handleClick(row) {
-      console.log(row);
+      //console.log(row);
     },
     handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
+      this.pageSize=val
+      this,this.init()
     },
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
+      this.currentPage=val
+      this,this.init()
     },
     register(){
-      alert("弹出添加的表单")
+      this.toAddParams={addName:"新建"}
+      this.changeUserAddShow(true)
+    },
+    changeUserAddShow(status){
+      this.userAddShow=status
     },
     formatStatus(row, column){
       let res=""

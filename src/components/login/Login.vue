@@ -64,7 +64,7 @@ import {login} from "../../request/sysApi"
               }
             })
           } else {
-            console.log('error submit!!');
+            //console.log('error submit!!');
             return false;
           }
         });

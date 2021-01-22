@@ -56,7 +56,7 @@ export default {
   }
 
    .routerView{
-    background-color: #f7f1f4;
+    background-color:#fde7ef;
     width: 100%;
     height: 600px;
     position: relative;
