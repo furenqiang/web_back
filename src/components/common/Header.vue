@@ -71,7 +71,6 @@ export default {
   methods: {
     logoutClick(){
       logout({
-        url:"logout"
       }).then(res=>{
         if(res.code===200){
           this.$message({
@@ -98,7 +97,6 @@ export default {
         }
         }).then(({ value }) => {
           updateUser({
-          url:"sysUser/updateUser",
           data:{
             id:JSON.parse(
               sessionStorage.getItem("userInfo")

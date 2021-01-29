@@ -5,7 +5,7 @@ module.exports = {
   },
   devServer: {
     publicPath: '/',
-    port: 10001, // 端口号
+    port: 10000, // 端口号
     // 如果外网想ip访问 屏蔽掉host
     // host: 'localhost',
     https: false, // https:{type:Boolean}
@@ -13,7 +13,8 @@ module.exports = {
     // proxy: 'http://localhost:3000' // 配置跨域处理,只有一个代理
     proxy: {
         'sysApi/': {
-            target: 'http://192.168.1.11:10002',
+            target: 'http://192.168.1.32:10002',
+            //target: 'http://47.97.200.76/sysApi',
             ws: true,
             changeOrigin: true,
             pathRewrite: {

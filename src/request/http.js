@@ -53,10 +53,10 @@ export function post(url, params) {
 
   //4、拦截器，拦截请求发送前
   axios.interceptors.request.use(config=>{
-    console.log("request success");
+    //console.log("request success");
     return config;//一定要返回config
   },err=>{
-    console.log("requset error");
+    //console.log("requset error");
     return err;
   })
 
@@ -81,7 +81,7 @@ export function post(url, params) {
       type: 'error'
     });
   }
-    console.log("response success");
+    //console.log("response success");
     return response;
   },err=>{
     // 如果请求为非200否者默认统一处理
@@ -91,7 +91,7 @@ export function post(url, params) {
       type: 'error'
     });
   }
-    console.log("response error");
+    //console.log("response error");
     return err;
   })
 

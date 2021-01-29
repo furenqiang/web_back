@@ -45,7 +45,6 @@ import {login} from "../../request/sysApi"
         this.$refs[formName].validate((valid) => {
           if (valid) {
             login({
-              url:'login',
               data:{
                 username:this.ruleForm.username,
                 password:this.ruleForm.password

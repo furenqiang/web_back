@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex"
+import router from "../router";
 
 Vue.use(Vuex);
 const store= new Vuex.Store({
@@ -43,6 +44,9 @@ const store= new Vuex.Store({
         return n.name==params.tab.activeName
       })
       state.navMenu.menu.defaultActive=activeMenu.index
+      router.push({
+        path:activeMenu.path
+      })
       for(let i in state.headerTab.editableTabs){
         if(state.headerTab.editableTabs[i].name==params.tab.name){
           state.headerTab.editableTabs.splice(i,1)

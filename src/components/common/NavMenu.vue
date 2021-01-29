@@ -37,9 +37,9 @@ export default {
     return {
       isCollapse: true,
       menu:[
-        {"title":"系统管理",
+        {"title":"档案管理",
         "index":"1",
-        "icon":"el-icon-menu",
+        "icon":"el-icon-folder",
         "path":"",
         "name":"0",
         "children":[{
@@ -47,23 +47,34 @@ export default {
           "index":"1-1",
           "path":"/user",
           "name":"1"
-          },
+          }]
+        },
+        {"title":"日志查看",
+        "index":"2",
+        "icon":"el-icon-date",
+        "name":"",
+        "children":[
           {
             "title":"操作日志",
-            "index":"1-2",
-            "path":"",
+            "index":"2-1",
+            "path":"/log",
             "name":"2"
-              }]
           },
-        {"title":"档案设置",
-        "index":"2",
+          {"title":"异常日志",
+          "index":"2-2",
+          "path":"/exceptLog",
+          "name":"3"
+          }]
+        },
+        {"title":"敬请期待",
+        "index":"3",
         "icon":"el-icon-setting",
         "name":"",
         "children":[
-          {"title":"用户档案",
-          "index":"2-1",
+          {"title":"有空完善",
+          "index":"3-1",
           "path":"",
-          "name":"3"
+          "name":"4"
           }
         ]}
       ]

@@ -94,7 +94,6 @@ export default {
         this.$refs[formName].validate((valid) => {
           if (valid) {
             register({
-              url:'sysUser/register',
               data:{
                 username:this.ruleForm.username,
                 password:this.ruleForm.pass

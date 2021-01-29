@@ -4,8 +4,10 @@ import Router from "vue-router";
 import home from "../components/home/Home";
 import user from "../components/sysUser/User";
 import login from "../components/login/Login";
-import {test} from "../request/sysApi"
-import store from "../store/index"
+import log from "../components/sysLog/Log";
+import exceptLog from "../components/sysExceptionLog/ExceptLog";
+import {test} from "../request/sysApi";
+import store from "../store/index";
 
 Vue.use(Router);
 
@@ -19,7 +21,7 @@ const router= new Router({
       path: "/",
       // component: 组件类名,
       redirect: "/home"
-    }, // 路由列表
+    }, 
     {
       // name:"路由别名",
       name: "home",
@@ -27,7 +29,7 @@ const router= new Router({
       path: "/home",
       // component: 组件类名,
       component: home
-    }, // 路由列表
+    }, 
     {
       // name:"路由别名",
       name: "user",
@@ -35,7 +37,7 @@ const router= new Router({
       path: "/user",
       // component: 组件类名,
       component: user
-    }, // 路由列表
+    }, 
     {
       // name:"路由别名",
       name: "login",
@@ -43,6 +45,22 @@ const router= new Router({
       path: "/login",
       // component: 组件类名,
       component: login
+    }, 
+    {
+      // name:"路由别名",
+      name: "log",
+      // path: "路由地址",
+      path: "/log",
+      // component: 组件类名,
+      component: log
+    }, 
+    {
+      // name:"路由别名",
+      name: "exceptLog",
+      // path: "路由地址",
+      path: "/exceptLog",
+      // component: 组件类名,
+      component: exceptLog
     }
   ]
 });
@@ -54,7 +72,6 @@ router.afterEach((to,from)=>{
     console.log("进入登录页");
   }else{
     test({
-      url:"test/testHttp",
       data:{
         param:"1"
       }

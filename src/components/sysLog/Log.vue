@@ -1,10 +1,18 @@
 <template>
-  <div class="userClass">
+  <div class="logClass">
     <div class="topClass">
       <span>
-        <el-button type="primary" icon="el-icon-circle-plus" class="addBtn" @click="register">创建</el-button>
-        用户名：<el-input v-model="inputUsername" class="input"></el-input>
-        创建人：<el-input v-model="inputCreatorName" class="input"></el-input>
+        操作人：<el-input v-model="inputUsername" class="input"></el-input>
+        操作名称：<el-input v-model="inputOperation" class="input"></el-input>
+        请求IP：<el-input v-model="inputIp" class="input"></el-input>
+        <el-select v-model="selectOrderField" placeholder="请选择排序字段" class="select">
+          <el-option label="所用时长" value="1"></el-option>
+          <el-option label="操作时间" value="2"></el-option>
+        </el-select>
+        <el-select v-model="selectOrderType" placeholder="请选择排序类型" class="select">
+          <el-option label="正序" value="1"></el-option>
+          <el-option label="倒序" value="2"></el-option>
+        </el-select>
         <el-button type="primary" icon="el-icon-search" @click="search()" class="searchBtnClass">搜索</el-button>
       </span>
     </div>
@@ -17,23 +25,33 @@
       border
       style="width: 86%">
         <el-table-column
-        type="index"
-        width="60"
-        label="序号">
+          type="index"
+          width="60"
+          label="序号">
         </el-table-column>
         <el-table-column
           prop="username"
-          label="用户名"
+          label="操作人"
           >
         </el-table-column>
         <el-table-column
-          prop="creatorName"
-          label="创建人"
+          prop="operation"
+          label="操作名称"
+          >
+        </el-table-column>
+        <el-table-column
+          prop="time"
+          label="所用时长（毫秒）"
+          >
+        </el-table-column>
+        <el-table-column
+          prop="ip"
+          label="请求IP"
           >
         </el-table-column>
         <el-table-column
           prop="createTime"
-          label="创建时间"
+          label="请求时间"
           >
           <template slot-scope="scope">
             <i class="el-icon-time"></i>
@@ -41,18 +59,11 @@
           </template>
         </el-table-column>
         <el-table-column
-          prop="status"
-          label="状态"
-          :formatter="formatStatus"
-          >
-        </el-table-column>
-        <el-table-column
           label="操作"
-          width="150px">
+          width="120px">
           <template slot-scope="scope">
             <el-button @click="detailClick(scope.row)" type="text" size="small">查看详情</el-button>
-            <el-button @click="deleteClick(scope.row)" type="text" size="small">禁用</el-button>
-            <user-detail :toDeatilParams="toDeatilParams"></user-detail>
+            <log-detail :toDeatilParams="toDeatilParams"></log-detail>
           </template>
         </el-table-column>
       </el-table>
@@ -69,14 +80,13 @@
         </el-pagination>
       </div>
     </div>
-    <user-add v-if="userAddShow" :toAddParams=toAddParams></user-add>
+
   </div>
 </template>
 
 <script>
-import {getUserListByParams,deleteUser} from '../../request/sysApi'
-import UserAdd from './UserAdd.vue';
-import userDetail from '../common/detail/Detail_from';
+import {getLogListByParams} from '../../request/sysApi'
+import logDetail from '../common/detail/Detail_from'
 
 export default {
   name: "User",
@@ -87,22 +97,22 @@ export default {
       pageSize:10,
       total:1,
       inputUsername:"",
-      inputCreatorName:"",
-      userAddShow:false,
-      toAddParams:{},
+      inputOperation:"",
+      inputIp:"",
+      selectOrderField:null,
+      selectOrderType:null,
       loading:true,
       toDeatilParams:{
         detailFormVisible:false,
         detailForm:{},
-        detailFormKey:["username","creatorName","createTime","password","roles"],
-        detailFormValue:["用户名","创建人","创建时间","密码（加密）","所授权限"],
-        detailTitle:"用户详情"
+        detailFormKey:["username","operation","time","ip","createTime","method","params","result"],
+        detailFormValue:["操作人","操作名称","所用时长（毫秒）","请求IP","请求时间","请求方法","请求参数","返回结果"],
+        detailTitle:"日志详情"
       }
     };
   },
   components: {
-    UserAdd,
-    userDetail
+    logDetail
   },
   mounted() {
     this.init()
@@ -116,58 +126,26 @@ export default {
       this.init()
     },
     init(){
-      getUserListByParams({
+      getLogListByParams({
         data:{
           page:this.currentPage,
           size:this.pageSize,
           username:this.inputUsername,
-          creatorName:this.inputCreatorName
+          operation:this.inputOperation,
+          ip:this.inputIp,
+          orderField:this.selectOrderField,
+          orderType:this.selectOrderType
         }
       }).then((res)=>{
-        //console.log(res);
         this.tableData=res.data
         this.total=res.total
         this.loading=false
       }).catch((err)=>{
-        //console.log(err);
       })
     },
     detailClick(row) {
-      if(row.roles instanceof Array){
-        let roles="| "
-        row.roles.forEach(item => {
-          roles+=(item.roleDesc+" | ")
-        });
-        row.roles=roles
-      }
       this.toDeatilParams.detailForm=row
       this.toDeatilParams.detailFormVisible=true
-    },
-    deleteClick(row){
-      this.$confirm('确定永久删除该用户?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        deleteUser({
-          data:{
-            id:row.id
-          }
-        }).then(res=>{
-          if(res.code===200){
-            this.$message({
-              type:'success',
-              message:res.message
-            })
-          }
-          this.init()
-        })
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消删除'
-        });          
-      });
     },
     handleSizeChange(val) {
       this.pageSize=val
@@ -176,27 +154,6 @@ export default {
     handleCurrentChange(val) {
       this.currentPage=val
       this,this.init()
-    },
-    register(){
-      this.toAddParams={addName:"新建"}
-      this.changeUserAddShow(true)
-    },
-    changeUserAddShow(status){
-      this.userAddShow=status
-    },
-    formatStatus(row, column){
-      let res=""
-      switch(row.status){
-        case 0:
-          res="停用"
-          break;
-        case 1:
-          res="可用"
-          break;
-        default:
-          res="未知"
-      }
-      return res;
     }
   }
 };
@@ -210,18 +167,19 @@ export default {
   .input{
     width:200px;
   }
-  .userClass{
+  .select{
+    width:150px;
+    position: relative;
+    left: 10px;
+  }
+  .logClass{
     position: relative;
     top: 10px;
     text-align: center;
   }
   .topClass{
     position: relative;
-    left: -230px;
-  }
-  .addBtn{
-    position: relative;
-    left: -170px;
+    left: -140px;
   }
   .bottomClass{
     position: relative;
@@ -233,7 +191,7 @@ export default {
     top: 10px;
   }
   .searchBtnClass{
-    position: relative;
-    left: 10px;
+     position: relative;
+     left: 20px;
   }
 </style>
