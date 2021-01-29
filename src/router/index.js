@@ -69,7 +69,7 @@ export default router
 
 router.afterEach((to,from)=>{
   if(to.fullPath=="/login"){
-    console.log("进入登录页");
+    //console.log("进入登录页");
   }else{
     test({
       data:{

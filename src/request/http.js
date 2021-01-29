@@ -75,7 +75,7 @@ export function post(url, params) {
     store.commit({
       type:'changeLoginShow',
       show:true
-      })
+    })
     Message({
       message: response.data.message,
       type: 'error'
