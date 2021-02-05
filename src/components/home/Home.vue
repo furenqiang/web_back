@@ -29,12 +29,15 @@ export default {
         { id: 5, title: '遥知不是雪，' },
         { id: 6, title: '为有暗香来。' },
       ],
-      myChart2series:{
+      myChart2series:[{
+        name: '异常次数',
+        type: 'bar',
+        data: []
+      },{
         name: '异常名称',
         type: 'bar',
-        data: [],
-        excName:[]
-      },
+        data: []
+      }],
       myChart2yAxis:{
         data:[]
       },
@@ -90,8 +93,8 @@ export default {
           let i=res.data.length;
           res.data.forEach(n => {
             this.myChart2yAxis.data.push("TOP"+i--)
-            this.myChart2series.data.push(n.num)
-            this.myChart2series.excName.push(n.excName)
+            this.myChart2series[0].data.push(n.num)
+            this.myChart2series[1].data.push(n.excName)
           });
           this.drawLine();
         }
@@ -134,8 +137,7 @@ export default {
               type: 'shadow'
           },
           formatter: function (params) {
-            params = params[0];
-            return params.excName+":"+ params.value+'次'; 
+            return params[1].value+": "+ params[0].value+'次'; 
           }
         },
         legend: {
