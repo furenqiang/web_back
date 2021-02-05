@@ -21,6 +21,7 @@ export default {
   name: "Home",
   data() {
     return {
+      dataInit:0,
       scrollData: [
         { id: 1, title: '《咏梅》' },
         { id: 2, title: '——王安石' },
@@ -63,12 +64,19 @@ export default {
     scrollUl
   },
   created(){
-
+   
   },
   mounted() {
     document.getElementById("home").style.height =
       document.body.clientHeight + "px";
-      this.init();
+      this.init()
+  },
+  watch:{
+    dataInit(newVal){
+      if(newVal>=3){
+        this.drawLine()
+      }
+    }
   },
   methods: {
     init(){
@@ -78,6 +86,7 @@ export default {
             this.myChart3xAxis.data.push(n.createTime.substring(0, 10))
             this.myChart3series.data.push((n.time/1000))
           });
+          this.dataInit++
         }
       })
       countExceptByParams({data:null}).then((res)=>{
@@ -86,6 +95,7 @@ export default {
             this.myChart4xAxis.data.push(n.createTime.substring(0, 10))
             this.myChart4series.data.push(n.num)
           });
+          this.dataInit++
         }
       })
       countExceptTop3({data:null}).then((res)=>{
@@ -96,10 +106,9 @@ export default {
             this.myChart2series[0].data.push(n.num)
             this.myChart2series[1].data.push(n.excName)
           });
-          this.drawLine();
+          this.dataInit++
         }
       })
-
     },
     drawLine(){
       // 基于准备好的dom，初始化echarts实例
