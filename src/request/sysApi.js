@@ -37,3 +37,16 @@ export const getLogListByParams = (params) => {
 export const getExceptionLogListByParams = (params) => {
      return get(sysApi+"sysExceptionLog/getExceptionLogListByParams",params.data);
 }
+//统计近七天每天请求所用时长
+export const countTimeByParams = (params) => {
+     return get(sysApi+"sysLog/countTimeByParams",params.data);
+}
+//统计近七天每天异常个数
+export const countExceptByParams = (params) => {
+     return get(sysApi+"sysExceptionLog/countExceptByParams",params.data);
+}
+//统计异常TOP3
+export const countExceptTop3 = (params) => {
+     return get(sysApi+"sysExceptionLog/countExceptTop3",params.data);
+}
+

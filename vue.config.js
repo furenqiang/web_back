@@ -13,7 +13,7 @@ module.exports = {
     // proxy: 'http://localhost:3000' // 配置跨域处理,只有一个代理
     proxy: {
         'sysApi/': {
-            target: 'http://192.168.1.32:10002',
+            target: 'http://localhost:10002',
             //target: 'http://47.97.200.76/sysApi',
             ws: true,
             changeOrigin: true,

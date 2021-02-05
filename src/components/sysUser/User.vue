@@ -124,10 +124,12 @@ export default {
           creatorName:this.inputCreatorName
         }
       }).then((res)=>{
-        //console.log(res);
-        this.tableData=res.data
-        this.total=res.total
-        this.loading=false
+        if(res.code===200){
+          //console.log(res);
+          this.tableData=res.data
+          this.total=res.total
+          this.loading=false
+        }
       }).catch((err)=>{
         //console.log(err);
       })

@@ -1,6 +1,6 @@
 <!-- 自动向上滚动文字 -->
 <template>
-  <div class="scrollUlClass" ref="scroll">
+  <div class="scrollAutoClass" ref="scroll">
     <ul>
       <li v-for="item in scrollData" :key="item.id">
         {{item.title}}
@@ -18,7 +18,8 @@ export default {
       speed: 10,
       timer: null,
       delay: 2000,
-      liHeight: ''
+      liHeight: '',
+      topEnd:0
     };
   },
   components: {},
@@ -51,8 +52,12 @@ export default {
         setTimeout(this.startScroll, this.delay);
       }else{
         this.scrollArea.scrollTop++;
-        if(this.scrollArea.scrollTop >= this.scrollArea.scrollHeight / 3.1){
-          this.scrollArea.scrollTop = 0;
+        if(this.scrollArea.scrollTop >= this.scrollArea.scrollHeight / 2||(this.topEnd!=0&&this.scrollArea.scrollTop==this.topEnd)){
+          setTimeout(()=>{
+            this.scrollArea.scrollTop = 0;
+          },1000)
+        }else{
+          this.topEnd=this.scrollArea.scrollTop
         }
       }
     },
@@ -60,10 +65,13 @@ export default {
 }
 </script>
 <style scoped>
-.scrollUlClass{
+.scrollAutoClass{
   height: 500px;
   width: 300px;
   line-height:50px;
   overflow:hidden;
+}
+.scrollAutoClass ul li{
+  color: #03a793 ;
 }
 </style>
