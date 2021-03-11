@@ -14,7 +14,7 @@ module.exports = {
     proxy: {
         'sysApi/': {
             target: 'http://localhost:10002',
-            //target: 'http://47.97.200.76/sysApi',
+            // target: 'http://47.97.200.76/sysApi',
             ws: true,
             changeOrigin: true,
             pathRewrite: {

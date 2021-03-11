@@ -6,7 +6,8 @@ import store from "./store/index"
 import ElementUI from "element-ui";
 import "element-ui/lib/theme-chalk/index.css";
 import vuescroll from 'vuescroll';
-import * as echarts from 'echarts'
+import * as echarts from 'echarts';
+import 'echarts-wordcloud';
 // 调用插件
 Vue.use(ElementUI);
 Vue.use(vuescroll);

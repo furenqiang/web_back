@@ -32,51 +32,52 @@
 </template>
 
 <script>
+import {getMenuTree} from "../../request/sysApi"
 export default {
   data() {
     return {
       isCollapse: true,
       menu:[
-        {"title":"档案管理",
-        "index":"1",
-        "icon":"el-icon-folder",
-        "path":"",
-        "name":"0",
-        "children":[{
-          "title":"系统用户",
-          "index":"1-1",
-          "path":"/user",
-          "name":"1"
-          }]
-        },
-        {"title":"日志查看",
-        "index":"2",
-        "icon":"el-icon-date",
-        "name":"",
-        "children":[
-          {
-            "title":"操作日志",
-            "index":"2-1",
-            "path":"/log",
-            "name":"2"
-          },
-          {"title":"异常日志",
-          "index":"2-2",
-          "path":"/exceptLog",
-          "name":"3"
-          }]
-        },
-        {"title":"敬请期待",
-        "index":"3",
-        "icon":"el-icon-setting",
-        "name":"",
-        "children":[
-          {"title":"有空完善",
-          "index":"3-1",
-          "path":"",
-          "name":"4"
-          }
-        ]}
+        // {"title":"档案管理",
+        // "index":"1",
+        // "icon":"el-icon-folder",
+        // "path":"",
+        // "name":"0",
+        // "children":[{
+        //   "title":"系统用户",
+        //   "index":"1-1",
+        //   "path":"/user",
+        //   "name":"1"
+        //   }]
+        // },
+        // {"title":"日志查看",
+        // "index":"2",
+        // "icon":"el-icon-date",
+        // "name":"",
+        // "children":[
+        //   {
+        //     "title":"操作日志",
+        //     "index":"2-1",
+        //     "path":"/log",
+        //     "name":"2"
+        //   },
+        //   {"title":"异常日志",
+        //   "index":"2-2",
+        //   "path":"/exceptLog",
+        //   "name":"3"
+        //   }]
+        // },
+        // {"title":"敬请期待",
+        // "index":"3",
+        // "icon":"el-icon-setting",
+        // "name":"",
+        // "children":[
+        //   {"title":"有空完善",
+        //   "index":"3-1",
+        //   "path":"/demo1",
+        //   "name":"4"
+        //   }
+        // ]}
       ]
     };
   },
@@ -121,6 +122,13 @@ export default {
           index:children.index
       }
       })
+    },
+    getMenuTree(){
+      getMenuTree({data:null}).then((res)=>{
+        if(res.code===200){
+          this.menu=res.data
+        }
+      })
     }
   },
   computed:{
@@ -134,7 +142,7 @@ export default {
     }
   },
   mounted(){
-    
+    this.getMenuTree()
   }
 };
 </script>

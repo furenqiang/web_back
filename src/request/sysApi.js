@@ -49,4 +49,8 @@ export const countExceptByParams = (params) => {
 export const countExceptTop3 = (params) => {
      return get(sysApi+"sysExceptionLog/countExceptTop3",params.data);
 }
+//左侧菜单树
+export const getMenuTree = (params) => {
+     return get(sysApi+"sysMenu/getMenuTree",params.data);
+}
 

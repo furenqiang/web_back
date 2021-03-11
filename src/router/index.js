@@ -6,6 +6,7 @@ import user from "../components/sysUser/User";
 import login from "../components/login/Login";
 import log from "../components/sysLog/Log";
 import exceptLog from "../components/sysExceptionLog/ExceptLog";
+import demo1 from "../components/demo/demo1";
 import {test} from "../request/sysApi";
 import store from "../store/index";
 
@@ -61,6 +62,14 @@ const router= new Router({
       path: "/exceptLog",
       // component: 组件类名,
       component: exceptLog
+    }, 
+    {
+      // name:"路由别名",
+      name: "demo1",
+      // path: "路由地址",
+      path: "/demo1",
+      // component: 组件类名,
+      component: demo1
     }
   ]
 });
