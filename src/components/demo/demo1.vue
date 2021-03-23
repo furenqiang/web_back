@@ -152,7 +152,6 @@ export default {
   #demo1Chart3{
     border: solid 1px #eea7ba;
     top: -25px;
-    z-index: 10000;
   }
   #demo1Chart4{
     border: solid 1px #eea7ba;
