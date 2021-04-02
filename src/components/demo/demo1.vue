@@ -6,13 +6,15 @@
     <div id="demo1Chart3" :style="{width: '500px', height: '300px'}"></div>
     <div id="demo1Chart4" :style="{width: '500px', height: '300px'}"></div>
     <div id="aplayerDiv">
-        <aplayer class="aplayer" autoplay :music="{
+       <vue-scroll :ops="ops" class="vueScroll">
+       <aplayer autoplay :music="{
           title: '剑心',
           artist: '张杰',
           src: 'https://edu-guil-1010.oss-cn-beijing.aliyuncs.com/%E5%A4%A9%E7%A9%BA%E4%B9%8B%E5%9F%8E.m4a',
           pic: 'https://p2.music.126.net/ixIs5kkukgNYMmeDsc35_g==/29686813955450.jpg'
         }" :list="musicList">
         </aplayer>
+    </vue-scroll>
     </div>
   </div>
 </template>
@@ -27,6 +29,20 @@ import aplayer from "vue-aplayer";
 export default {
   data () {
     return {
+      ops: {
+          vuescroll: {},
+          scrollPanel: {},
+          rail: {
+            keepShow:true
+          },
+          bar: {
+            hoverStyle: true,
+            onlyShowBarOnScroll: false, //是否只有滚动的时候才显示滚动条
+            background: 'green',
+            //opacity: 0.5,//滚动条透明度
+            "overflow-x": "hidden"
+          }
+        },
       musicList: [{
           title: '白羊',
           artist:'徐秉龙',
@@ -297,8 +313,7 @@ export default {
     left: 1005px;
     top: -605px;
   }
-  #aplayerDiv .aplayer{
+  #aplayerDiv .vueScroll{
     height: 600px !important;
-    overflow: auto;
   }
 </style>
