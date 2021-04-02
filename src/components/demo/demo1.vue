@@ -5,6 +5,15 @@
     <div id="demo1Chart2" :style="{width: '500px', height: '300px'}"></div>
     <div id="demo1Chart3" :style="{width: '500px', height: '300px'}"></div>
     <div id="demo1Chart4" :style="{width: '500px', height: '300px'}"></div>
+    <div id="aplayerDiv">
+        <aplayer class="aplayer" autoplay :music="{
+          title: '剑心',
+          artist: '张杰',
+          src: 'https://edu-guil-1010.oss-cn-beijing.aliyuncs.com/%E5%A4%A9%E7%A9%BA%E4%B9%8B%E5%9F%8E.m4a',
+          pic: 'https://p2.music.126.net/ixIs5kkukgNYMmeDsc35_g==/29686813955450.jpg'
+        }" :list="musicList">
+        </aplayer>
+    </div>
   </div>
 </template>
 
@@ -14,12 +23,135 @@ require("echarts-wordcloud");
 require("echarts-liquidfill");
 require('../../assets/data/china')  //引入china.js地图文件
 import echartMapData from "../../assets/data/EchartMapData"//引入map数据
+import aplayer from "vue-aplayer";
 export default {
   data () {
     return {
+      musicList: [{
+          title: '白羊',
+          artist:'徐秉龙',
+          src: "https://edu-guil-1010.oss-cn-beijing.aliyuncs.com/%E8%92%B2%E5%85%AC%E8%8B%B1%E7%9A%84%E7%BA%A6%E5%AE%9A.m4a",
+          pic: 'https://p1.music.126.net/tczb_7II9KzSuLQsVt89Gw==/109951163049336667.jpg',
+          },
+          {
+            title: '说谎',
+            artist: '林宥嘉',
+            src: "https://edu-guil-1010.oss-cn-beijing.aliyuncs.com/%E8%92%B2%E5%85%AC%E8%8B%B1%E7%9A%84%E7%BA%A6%E5%AE%9A.m4a",
+            pic: 'https://p2.music.126.net/mMZNB-jhYsw29K61QtopJA==/109951163187404137.jpg',
+          },
+          {
+            title: '成都',
+            artist: '赵雷',
+            src: "https://edu-guil-1010.oss-cn-beijing.aliyuncs.com/%E8%92%B2%E5%85%AC%E8%8B%B1%E7%9A%84%E7%BA%A6%E5%AE%9A.m4a",
+            pic: 'https://p1.music.126.net/34YW1QtKxJ_3YnX9ZzKhzw==/2946691234868155.jpg'
+          },
+          {
+            title: '陪你到底',
+            artist: '许华升',
+            src: "https://edu-guil-1010.oss-cn-beijing.aliyuncs.com/%E8%92%B2%E5%85%AC%E8%8B%B1%E7%9A%84%E7%BA%A6%E5%AE%9A.m4a",
+            pic: 'https://p1.music.126.net/a7QkLGexMQGT2lF3mqcUdw==/109951163693319625.jpg',
+          },
+          {
+            title: '广东爱情故事',
+            artist: '雨神',
+            src: "https://edu-guil-1010.oss-cn-beijing.aliyuncs.com/%E8%92%B2%E5%85%AC%E8%8B%B1%E7%9A%84%E7%BA%A6%E5%AE%9A.m4a",
+            pic: 'https://p1.music.126.net/gjvguk9I-QwuyWFjQHM9SA==/109951163189947600.jpg',
+          },
+          {
+            title: '烟火里的尘埃',
+            artist: '华晨宇',
+            src: "https://edu-guil-1010.oss-cn-beijing.aliyuncs.com/%E8%92%B2%E5%85%AC%E8%8B%B1%E7%9A%84%E7%BA%A6%E5%AE%9A.m4a",
+            pic: 'https://p1.music.126.net/_49Xz_x9kTTdEgmYYk6w2w==/6672936069046297.jpg',
+          },
+          {
+            title: '烟火里的尘埃',
+            artist: '华晨宇',
+            src: "https://edu-guil-1010.oss-cn-beijing.aliyuncs.com/%E8%92%B2%E5%85%AC%E8%8B%B1%E7%9A%84%E7%BA%A6%E5%AE%9A.m4a",
+            pic: 'https://p1.music.126.net/_49Xz_x9kTTdEgmYYk6w2w==/6672936069046297.jpg',
+          },
+          {
+            title: '烟火里的尘埃',
+            artist: '华晨宇',
+            src: "https://edu-guil-1010.oss-cn-beijing.aliyuncs.com/%E8%92%B2%E5%85%AC%E8%8B%B1%E7%9A%84%E7%BA%A6%E5%AE%9A.m4a",
+            pic: 'https://p1.music.126.net/_49Xz_x9kTTdEgmYYk6w2w==/6672936069046297.jpg',
+          },
+          {
+            title: '烟火里的尘埃',
+            artist: '华晨宇',
+            src: "https://edu-guil-1010.oss-cn-beijing.aliyuncs.com/%E8%92%B2%E5%85%AC%E8%8B%B1%E7%9A%84%E7%BA%A6%E5%AE%9A.m4a",
+            pic: 'https://p1.music.126.net/_49Xz_x9kTTdEgmYYk6w2w==/6672936069046297.jpg',
+          },
+          {
+            title: '烟火里的尘埃',
+            artist: '华晨宇',
+            src: "https://edu-guil-1010.oss-cn-beijing.aliyuncs.com/%E8%92%B2%E5%85%AC%E8%8B%B1%E7%9A%84%E7%BA%A6%E5%AE%9A.m4a",
+            pic: 'https://p1.music.126.net/_49Xz_x9kTTdEgmYYk6w2w==/6672936069046297.jpg',
+          },
+          {
+            title: '烟火里的尘埃',
+            artist: '华晨宇',
+            src: "https://edu-guil-1010.oss-cn-beijing.aliyuncs.com/%E8%92%B2%E5%85%AC%E8%8B%B1%E7%9A%84%E7%BA%A6%E5%AE%9A.m4a",
+            pic: 'https://p1.music.126.net/_49Xz_x9kTTdEgmYYk6w2w==/6672936069046297.jpg',
+          },
+          {
+            title: '烟火里的尘埃',
+            artist: '华晨宇',
+            src: "https://edu-guil-1010.oss-cn-beijing.aliyuncs.com/%E8%92%B2%E5%85%AC%E8%8B%B1%E7%9A%84%E7%BA%A6%E5%AE%9A.m4a",
+            pic: 'https://p1.music.126.net/_49Xz_x9kTTdEgmYYk6w2w==/6672936069046297.jpg',
+          },
+          {
+            title: '烟火里的尘埃',
+            artist: '华晨宇',
+            src: "https://edu-guil-1010.oss-cn-beijing.aliyuncs.com/%E8%92%B2%E5%85%AC%E8%8B%B1%E7%9A%84%E7%BA%A6%E5%AE%9A.m4a",
+            pic: 'https://p1.music.126.net/_49Xz_x9kTTdEgmYYk6w2w==/6672936069046297.jpg',
+          },
+          {
+            title: '烟火里的尘埃',
+            artist: '华晨宇',
+            src: "https://edu-guil-1010.oss-cn-beijing.aliyuncs.com/%E8%92%B2%E5%85%AC%E8%8B%B1%E7%9A%84%E7%BA%A6%E5%AE%9A.m4a",
+            pic: 'https://p1.music.126.net/_49Xz_x9kTTdEgmYYk6w2w==/6672936069046297.jpg',
+          },
+          {
+            title: '烟火里的尘埃',
+            artist: '华晨宇',
+            src: "https://edu-guil-1010.oss-cn-beijing.aliyuncs.com/%E8%92%B2%E5%85%AC%E8%8B%B1%E7%9A%84%E7%BA%A6%E5%AE%9A.m4a",
+            pic: 'https://p1.music.126.net/_49Xz_x9kTTdEgmYYk6w2w==/6672936069046297.jpg',
+          },
+          {
+            title: '烟火里的尘埃',
+            artist: '华晨宇',
+            src: "https://edu-guil-1010.oss-cn-beijing.aliyuncs.com/%E8%92%B2%E5%85%AC%E8%8B%B1%E7%9A%84%E7%BA%A6%E5%AE%9A.m4a",
+            pic: 'https://p1.music.126.net/_49Xz_x9kTTdEgmYYk6w2w==/6672936069046297.jpg',
+          },
+          {
+            title: '烟火里的尘埃',
+            artist: '华晨宇',
+            src: "https://edu-guil-1010.oss-cn-beijing.aliyuncs.com/%E8%92%B2%E5%85%AC%E8%8B%B1%E7%9A%84%E7%BA%A6%E5%AE%9A.m4a",
+            pic: 'https://p1.music.126.net/_49Xz_x9kTTdEgmYYk6w2w==/6672936069046297.jpg',
+          },
+          {
+            title: '烟火里的尘埃',
+            artist: '华晨宇',
+            src: "https://edu-guil-1010.oss-cn-beijing.aliyuncs.com/%E8%92%B2%E5%85%AC%E8%8B%B1%E7%9A%84%E7%BA%A6%E5%AE%9A.m4a",
+            pic: 'https://p1.music.126.net/_49Xz_x9kTTdEgmYYk6w2w==/6672936069046297.jpg',
+          },
+          {
+            title: '烟火里的尘埃',
+            artist: '华晨宇',
+            src: "https://edu-guil-1010.oss-cn-beijing.aliyuncs.com/%E8%92%B2%E5%85%AC%E8%8B%B1%E7%9A%84%E7%BA%A6%E5%AE%9A.m4a",
+            pic: 'https://p1.music.126.net/_49Xz_x9kTTdEgmYYk6w2w==/6672936069046297.jpg',
+          },
+          {
+            title: '烟火里的尘埃',
+            artist: '华晨宇',
+            src: "https://edu-guil-1010.oss-cn-beijing.aliyuncs.com/%E8%92%B2%E5%85%AC%E8%8B%B1%E7%9A%84%E7%BA%A6%E5%AE%9A.m4a",
+            pic: 'https://p1.music.126.net/_49Xz_x9kTTdEgmYYk6w2w==/6672936069046297.jpg',
+          }]
     };
   },
-  components: {},
+  components: {
+    aplayer: aplayer
+  },
   computed: {},
   mounted() {
     this.drowWorldCloud()
@@ -151,10 +283,22 @@ export default {
   }
   #demo1Chart3{
     border: solid 1px #eea7ba;
-    top: -25px;
+
   }
   #demo1Chart4{
     border: solid 1px #eea7ba;
-    top: -25px;
+
+  }
+  #aplayerDiv{
+    border: solid 1px #eea7ba;
+    height: 600px;
+    width: 330px;
+    position: relative;
+    left: 1005px;
+    top: -605px;
+  }
+  #aplayerDiv .aplayer{
+    height: 600px !important;
+    overflow: auto;
   }
 </style>
