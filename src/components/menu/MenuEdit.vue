@@ -52,7 +52,9 @@ export default {
       };
     var validatePath = (rule, value, callback) => {
       if(this.toEditParams.ruleForm.level===2){
-        if(value.indexOf("/")!=-1){
+        if(!value){
+          return callback(new Error('二级菜单必须填写路径!'));
+        }else if(value.indexOf("/")!=-1){
           callback();
         }else{
           return callback(new Error('菜单路径格式错误!'));
