@@ -7,7 +7,7 @@
     <div id="demo1Chart4" :style="{width: '500px', height: '300px'}"></div>
     <div id="aplayerDiv">
        <vue-scroll :ops="ops" class="vueScroll">
-       <aplayer autoplay :float="false" :showlrc="true" :music="{
+       <aplayer autoplay :float="false" :showLrc="true" :music="{
           title: '阿拉斯加的海湾',
           artist: '男声版',
           src: 'http://win.web.nf01.sycdn.kuwo.cn/ff51fd86dafa8da1ea2184eb2bc9d58d/6066e065/resource/n1/21/56/1067948247.mp3',

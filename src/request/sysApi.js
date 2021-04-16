@@ -53,4 +53,16 @@ export const countExceptTop3 = (params) => {
 export const getMenuTree = (params) => {
      return get(sysApi+"sysMenu/getMenuTree",params.data);
 }
+//删除菜单
+export const deleteMenu = (params) => {
+     return post(sysApi+"sysMenu/deleteMenu",params.data);
+}
+//修改菜单
+export const updateMenu = (params) => {
+     return post(sysApi+"sysMenu/updateMenu",params.data);
+}
+//添加菜单
+export const addMenu = (params) => {
+     return post(sysApi+"sysMenu/addMenu",params.data);
+}
 

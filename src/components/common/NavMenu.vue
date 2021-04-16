@@ -114,13 +114,13 @@ export default {
         tab:{
           index:children.index,
           name: children.name
-      }
+        }
       })
       this.$store.commit({
         type:'handleDefaultActive',
         tab:{
           index:children.index
-      }
+        }
       })
     },
     getMenuTree(){
@@ -143,6 +143,9 @@ export default {
   },
   mounted(){
     this.getMenuTree()
+    this.$bus.$on('refreshMenuTree',()=>{
+      this.getMenuTree()
+    })
   }
 };
 </script>
