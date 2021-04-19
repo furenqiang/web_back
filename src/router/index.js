@@ -7,6 +7,8 @@ import login from "../components/login/Login";
 import log from "../components/sysLog/Log";
 import exceptLog from "../components/sysExceptionLog/ExceptLog";
 import demo1 from "../components/demo/demo1";
+import AMap from "../components/demo/AMap";
+import demo2 from "../components/demo/demo2";
 import menu from "../components/menu/Menu";
 import {test} from "../request/sysApi";
 import store from "../store/index";
@@ -79,6 +81,22 @@ const router= new Router({
       path: "/menu",
       // component: 组件类名,
       component: menu
+    }, 
+    {
+      // name:"路由别名",
+      name: "AMap",
+      // path: "路由地址",
+      path: "/AMap",
+      // component: 组件类名,
+      component: AMap
+    }, 
+    {
+      // name:"路由别名",
+      name: "demo2",
+      // path: "路由地址",
+      path: "/demo2",
+      // component: 组件类名,
+      component: demo2
     }
   ]
 });
