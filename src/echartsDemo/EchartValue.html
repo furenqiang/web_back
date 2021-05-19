@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>echarts练习demo</title>
+</head>
+<script src="../assets/tools/echarts.min.js"></script>
+
+<body>
+  <div id="divId" style="width: 600px;height: 400px;"></div>
+  <!--  一定要放在div的下方  -->
+  <script>
+    var mCharts=echarts.init(document.getElementById("divId"));
+    option = {
+      xAxis: {
+        type:'value',
+        scale:true//设置y轴的最小值不是从0开始
+      },
+      yAxis: {
+        type:'value',
+        scale:true//设置y轴的最小值不是从0开始
+      },
+      series: [{
+        type:'effectScatter', //设置涟漪效果
+        showEffectOn:'emphasis',//render--设置涟漪动画在渲染后显示 \ emphasis--鼠标滑过显示效果
+        rippleEffect:{
+          scale:15
+        },
+        //symbolSize: 20,//大小固定值
+        symbolSize:function(arg){//点的大小 回调函数
+          console.log(arg);
+          return arg[0]/(arg[1]*arg[1])>0.2?30:10
+        },
+        itemStyle:{//点的颜色回调函数
+          color:function(arg){
+            return arg.data[0]/(arg.data[1]*arg.data[1])>0.2?'red':'green'
+          }
+        },
+        data: [
+          [10.0, 8.04],
+          [8.07, 6.95],
+          [13.0, 7.58],
+          [9.05, 8.81],
+          [11.0, 8.33],
+          [14.0, 7.66],
+          [13.4, 6.81],
+          [10.0, 6.33],
+          [14.0, 8.96],
+          [12.5, 6.82],
+          [9.15, 7.20],
+          [11.5, 7.20],
+          [3.03, 4.23],
+          [12.2, 7.83],
+          [2.02, 4.47],
+          [1.05, 3.33],
+          [4.05, 4.96],
+          [6.03, 7.24],
+          [12.0, 6.26],
+          [12.0, 8.84],
+          [7.08, 5.82],
+          [5.02, 5.68]
+        ],
+      type: 'scatter'
+      }]
+    };
+    mCharts.setOption(option)
+  </script>
+</body>
+</html>

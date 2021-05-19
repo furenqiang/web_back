@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>echarts练习demo</title>
+</head>
+<script src="../assets/tools/echarts.min.js"></script>
+
+<body>
+  <div id="divId" style="width: 600px;height: 400px;"></div>
+  <!--  一定要放在div的下方  -->
+  <script>
+    var mCharts=echarts.init(document.getElementById("divId"));
+    option = {
+    title: {
+        text: '某站点用户访问来源',
+        subtext: '纯属虚构',
+        left: 'center'
+    },
+    tooltip: {
+        trigger: 'item'
+    },
+    legend: {
+        orient: 'vertical',
+        left: 'left',
+    },
+    series: [
+        {
+            name: '访问来源',
+            type: 'pie',
+            // radius: '50%',//整圆半径
+            radius:['25%','50%'],//圆环--内圆半径和外圆半径
+            roseType:'radius',//设置为南丁格尔图：每个扇形半径不一样
+            selectedMode:'single',//设置点击某块扇形后偏离圆心一段距离，'multiple'--可多个同时偏离
+            selectedOffset:30,
+            label:{//显示文字
+              show:true,
+              formatter:function(arg){
+                return arg.name+":"+arg.value;
+              }
+            },//饼图文字显示
+            data: [
+                {value: 1048, name: '搜索引擎'},
+                {value: 735, name: '直接访问'},
+                {value: 580, name: '邮件营销'},
+                {value: 484, name: '联盟广告'},
+                {value: 300, name: '视频广告'}
+            ],
+            emphasis: {
+                itemStyle: {
+                    shadowBlur: 10,
+                    shadowOffsetX: 0,
+                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                }
+            }
+        }
+    ]
+};
+    mCharts.setOption(option)
+  </script>
+</body>
+</html>

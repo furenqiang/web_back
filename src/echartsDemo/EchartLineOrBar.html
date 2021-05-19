@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>echarts练习demo</title>
+</head>
+<script src="../assets/tools/echarts.min.js"></script>
+
+<body>
+  <div id="divId" style="width: 600px;height: 400px;"></div>
+  <!--  一定要放在div的下方  -->
+  <script>
+    var mCharts=echarts.init(document.getElementById("divId"));
+    option = {//配置项参考官方文档：https://echarts.apache.org/zh/option.html#title
+      title:{text:"成绩"},
+      dataZoom:[
+        {//添加数据筛选滑块
+          type:'slider', //inside--滚轮滚动缩放
+          xAxisIndex:0 //声明为x轴设置筛选缩放
+      },{
+        type:'slider', //inside--滚轮滚动缩放
+          yAxisIndex:0,//声明为y轴设置筛选缩放
+          start:0,
+          end:50//设置筛选缩放的起始和结束为0~50%
+      }
+      ],
+      grid:{//设置边框网格
+        show:true,
+        borderWidth:10,//网格宽度
+        borderColor:'red',//网格颜色
+        // top:100,//网格定位
+        // left:100,
+        // width:500,
+        // height:300
+
+      },//显示坐标轴的网格
+      xAxis: {
+        type: 'category',
+        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        boundaryGap:true, // 与y轴（0,x）有间隔
+        //position:'top'//设置x轴坐标在顶部
+      },
+      yAxis: {
+        type: 'value',
+        scale:true //设置y轴的最小值不是从0开始
+      },
+      series: [{
+        name:"语文呢",
+        data: [150, 230, 224, 218, 135, 147, 260],
+        type: 'line',
+        markPoint:{
+          data:[{
+            type:'max',name:'最大值'
+          },{
+            type:'min',name:'最小值'
+          }]
+        },
+        markLine:{
+          data:[{
+              type:'average',name:'平均线'
+            }]
+        },
+        markArea:{//将某个区间标记
+          data:[[{
+            xAxis:'Mon'
+          },{
+            xAxis:'Tue'
+          }],[
+          {
+            xAxis:'Sat'
+          },{
+            xAxis:'Sun'
+          }
+          ]]
+        },
+        label:{
+          show:true,
+          rotate:10
+        },
+        barWidth:'30%',
+        smooth:true,//平滑
+        lineStyle:{
+          color:'blue'
+        },
+        satck:'all',//追加堆叠
+        areaStyle:{//填充风格
+          color:'black'
+        }
+      },{
+        name:"数学呢",
+        data: [100, 210, 221, 281, 115, 117, 160],
+        type: 'line',
+        barWidth:'30%',
+        lineStyle:{
+          color:'red',
+          type:'dashed'//dashed--虚线 \ dotted--点线 \ solid--实线
+        },
+        areaStyle:{//填充风格
+          color:'pink'
+        },
+        satck:'all'//追加堆叠
+      }
+    ],
+      tooltip:{//鼠标移入或点击
+        trigger:'axis',
+        triggerOn:'click',
+        //formatter:'{b}的成绩是{c}'
+        formatter:function(arg){
+          console.log(arg);
+          return arg[0].name+":"+arg[0].value;
+        }
+      },
+      toolbox:{//echarts封装的内置工具
+        feature:{
+          saveAsImage:{},
+          dataView:{},
+          restore:{},
+          dataZoom:{},
+          magicType:{type:['line','bar']}
+        }
+      },
+      legend:{
+        data:['语文呢','数学呢']
+      }
+    };
+    mCharts.setOption(option)
+  </script>
+</body>
+</html>

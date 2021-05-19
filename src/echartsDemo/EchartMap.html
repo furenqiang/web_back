@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>echarts练习demo</title>
+</head>
+<script src="../assets/tools/echarts.min.js"></script>
+<script src="../assets/tools/jquery.min.js"></script>
+<body>
+  <div id="divId" style="width: 800px;height: 600px;border: 1px solid red;"></div>
+  <!--  一定要放在div的下方  -->
+  <script>
+    var mCharts=echarts.init(document.getElementById("divId"));
+    var airData=  [{name: '中西区', value: 200.34},
+                    {name: '湾仔区', value: 157.48},
+                    {name: '东区', value: 316.1},
+                    {name: '南区', value: 362.6},
+                    {name: '油尖旺', value: 445.49},
+                    {name: '深水埗', value: 489.64},
+                    {name: '九龙城', value: 379.78},
+                    {name: '黄大仙', value: 480.97},
+                    {name: '观塘区', value: 204.26},
+                    {name: '葵青区', value: 500.9},
+                    {name: '荃湾区', value: 318.26},
+                    {name: '屯门区', value: 181.84},
+                    {name: '元朗区', value: 348.01},
+                    {name: '北区区', value: 127.92},
+                    {name: '大埔区', value: 120.98},
+                    {name: '沙田区', value: 172.94},
+                    {name: '西贡区', value: 138},
+                    {name: '离岛区', value: 286.98}];
+                    var scatterData=[{value:[114.225965,22.279779]}];
+    $.getJSON('../assets/data/echartsMapData/province/xianggang.json',function(res){
+      echarts.registerMap('xianggang',res);//注册数据res到chinaMap
+      var option={
+        geo:{
+          type:'map',
+          map:'xianggang',//map绑定数据chinaMap
+          roam:true,//允许缩放和拖动
+          label:{//名称
+            show:true
+          },
+          zoom:1,//初始化缩放比例
+          //center:[114.225965,22.279779],//设置武汉为中心点
+        },
+        series:[
+          {
+            data:airData,//设置数据
+            geoIndex:0,//将ariData和第0个geo数据关联在一起
+            type:'map',
+          },
+          {
+            data:scatterData,
+            type:'effectScatter',//散点类型
+            coordinateSystem:'geo',//让散点图使用坐标系统
+            rippleEffect:{//设置涟漪效果
+              scale:15,
+              color:'yellow'
+            },
+          }
+        ],
+        visualMap:{//设置左侧缩放
+          min:0,
+          max:600,
+          inRange:{
+            color:['white','red']//控制颜色渐变范围
+          },
+          calculable:true//设置滑块样式
+        }
+      }
+      mCharts.setOption(option)
+    })
+  </script>
+</body>
+</html>

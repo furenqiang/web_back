@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>echarts练习demo</title>
+</head>
+<script src="../assets/tools/echarts.min.js"></script>
+<script src="../assets/tools/jquery.min.js"></script>
+<body>
+  <div id="divId" style="width: 800px;height: 600px;border: 1px solid red;"></div>
+  <!--  一定要放在div的下方  -->
+  <script>
+    var mCharts=echarts.init(document.getElementById("divId"));
+    option = {
+    title: {
+        text: '基础雷达图'
+    },
+    legend: {
+        data: ['预算分配（Allocated Budget）', '实际开销（Actual Spending）']
+    },
+    radar: {
+        shape: 'circle',//--圆形配置雷达图最外层图形 polygon--线形
+        indicator: [
+            { name: '销售（Sales）', max: 6500},
+            { name: '管理（Administration）', max: 16000},
+            { name: '信息技术（Information Technology）', max: 30000},
+            { name: '客服（Customer Support）', max: 38000},
+            { name: '研发（Development）', max: 52000},
+            { name: '市场（Marketing）', max: 25000}
+        ]
+    },
+    series: [{
+        name: '预算 vs 开销（Budget vs spending）',
+        type: 'radar',
+        data: [
+            {
+                value: [4200, 3000, 20000, 35000, 50000, 18000],
+                name: '预算分配（Allocated Budget）'
+            },
+            {
+                value: [5000, 14000, 28000, 26000, 42000, 21000],
+                name: '实际开销（Actual Spending）'
+            }
+        ],
+        label:{//设置标签样式
+          show:true,//显示数值
+        },
+        areaStyle:{},//设置阴影面积
+    }]
+};
+option2 = {
+    tooltip: {
+        formatter: '{a} <br/>{b} : {c}%'
+    },
+    series: [{
+        name: 'Pressure',
+        type: 'gauge',
+        detail: {
+            formatter: '{value}'
+        },
+        data: [{//每个对象代表一个指针
+            value: 80,
+            name: 'SCORE',
+            itemStyle:{//指针样式
+              color:'red'
+            }
+        },{
+            value: 50,
+            name: 'SCORE'
+        }],
+        min:20,
+        max:90,
+    }]
+};
+    mCharts.setOption(option2)
+  </script>
+</body>
+</html>

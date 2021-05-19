@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=gb2312">
+    <title>webgl</title>
+</head>
+<body onload="Init()">
+  <canvas id="myCanvas" style="border: 1px solid red;" width="600" height="450"></canvas>
+</body>
+  <script>
+    var webgl=null;
+    function Init(){
+      var canvas=document.getElementById('myCanvas');
+
+      webgl=canvas.getContext("webgl");//获取webgl对象
+
+      // 确认WebGL支持性
+      if (!webgl) {
+        alert("无法初始化WebGL，你的浏览器、操作系统或硬件等可能不支持WebGL。");
+        return;
+      }
+
+      //调用viewport方法，从坐标(0,0)开始到画布canvas的宽、高结束
+      webgl.viewport(0,0,canvas.clientWidth,canvas.clientHeight);
+
+      webgl.clearColor(1.0,0.0,0.0,1.0);//webgl清除颜色为红色 （R，G，B，A（透明度））
+
+      webgl.clear(webgl.COLOR_BUFFER_BIT);//webgl把画布清成红色
+
+      //webgl.
+    }
+  </script>
+</html>
