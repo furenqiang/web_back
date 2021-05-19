@@ -8,7 +8,14 @@ import "element-ui/lib/theme-chalk/index.css";
 import vuescroll from 'vuescroll';
 import * as echarts from 'echarts';
 import 'echarts-wordcloud';
-import VueAMap from 'vue-amap'
+import VueAMap from 'vue-amap';
+// import L from "leaflet";
+// import 'leaflet/dist/leaflet.css';
+// import 'leaflet.pm';
+// import 'leaflet.pm/dist/leaflet.pm.css';
+// import map from './map/map.js';
+// //将map.js挂载到vue上
+// Vue.prototype.$map = map;
 
 // 调用插件
 Vue.use(ElementUI);

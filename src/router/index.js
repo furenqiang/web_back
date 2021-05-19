@@ -6,9 +6,10 @@ import user from "../components/sysUser/User";
 import login from "../components/login/Login";
 import log from "../components/sysLog/Log";
 import exceptLog from "../components/sysExceptionLog/ExceptLog";
-import demo1 from "../components/demo/demo1";
-import AMap from "../components/demo/AMap";
-import demo2 from "../components/demo/demo2";
+import musicPlay from "../components/map/MusicPlay";
+import AMap from "../components/map/AMap";
+import leafletMap from "../components/map/LeafletMap";
+import oneMap from "../components/map/OneMap";
 import menu from "../components/menu/Menu";
 import {test} from "../request/sysApi";
 import store from "../store/index";
@@ -68,11 +69,11 @@ const router= new Router({
     }, 
     {
       // name:"路由别名",
-      name: "demo1",
+      name: "musicPlay",
       // path: "路由地址",
-      path: "/demo1",
+      path: "/musicPlay",
       // component: 组件类名,
-      component: demo1
+      component: musicPlay
     } , 
     {
       // name:"路由别名",
@@ -92,11 +93,19 @@ const router= new Router({
     }, 
     {
       // name:"路由别名",
-      name: "demo2",
+      name: "leafletMap",
       // path: "路由地址",
-      path: "/demo2",
+      path: "/leafletMap",
       // component: 组件类名,
-      component: demo2
+      component: leafletMap
+    }, 
+    {
+      // name:"路由别名",
+      name: "oneMap",
+      // path: "路由地址",
+      path: "/oneMap",
+      // component: 组件类名,
+      component: oneMap
     }
   ]
 });
