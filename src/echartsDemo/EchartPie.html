@@ -14,6 +14,13 @@
   <script>
     var mCharts=echarts.init(document.getElementById("divId"));
     option = {
+      animation:true,//开启动画
+      //animationDuration:1000,//设置动画时间1000毫秒
+      animationDuration:function(arg){//设置动画效果时间的回调函数
+        //console.log(arg);
+        return arg;
+      },
+      animationEasing:'bounceOut',//缓动动画
     title: {
         text: '某站点用户访问来源',
         subtext: '纯属虚构',
@@ -22,7 +29,7 @@
     tooltip: {
         trigger: 'item'
     },
-    legend: {
+    legend: {//图例说明
         orient: 'vertical',
         left: 'left',
     },
@@ -48,17 +55,41 @@
                 {value: 484, name: '联盟广告'},
                 {value: 300, name: '视频广告'}
             ],
-            emphasis: {
+            emphasis: {//鼠标滑过样式
                 itemStyle: {
-                    shadowBlur: 10,
-                    shadowOffsetX: 0,
-                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    shadowBlur: 100,
+                    shadowOffsetX: 10,
+                    shadowColor: 'rgba(0, 0, 0, 1)'
+                },
+                label:{
+                  color:'red'
                 }
             }
         }
     ]
 };
     mCharts.setOption(option)
+    mCharts.on('click',function(arg){//监听点击事件
+      console.log(arg);
+    })
+    mCharts.on('legendselectchanged',function(arg){//监听图例说明选择修改事件
+      console.log(arg);
+      //模拟用户行为，监听图例说明选择修改后对整个图标进行高亮显示
+      mCharts.dispatchAction({
+        type:'highlight',//设置高亮
+        seriesIndex:0,//系列索引，即上面的series[]哪个{}
+        dataIndex:1//数据索引
+      })
+      setTimeout(function(){//清空
+        mCharts.clear();
+      },1000)
+      setTimeout(function(){//重设置
+        mCharts.setOption(option);
+      },2000)
+      setTimeout(function(){//销毁实例，效果和清空一样，但此后无法再setOption()
+        mCharts.dispose();
+      },3000)
+    })
   </script>
 </body>
 </html>

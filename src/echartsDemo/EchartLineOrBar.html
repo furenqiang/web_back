@@ -7,13 +7,22 @@
   <title>echarts练习demo</title>
 </head>
 <script src="../assets/tools/echarts.min.js"></script>
-
+<script src="./theme/customed.js"></script>
 <body>
-  <div id="divId" style="width: 600px;height: 400px;"></div>
+  <div id="divId1" style="width: 600px;height: 400px;"></div>
+  <div id="divId2" style="width: 600px;height: 400px;"></div>
   <!--  一定要放在div的下方  -->
   <script>
-    var mCharts=echarts.init(document.getElementById("divId"));
-    option = {//配置项参考官方文档：https://echarts.apache.org/zh/option.html#title
+    var mCharts1=echarts.init(document.getElementById("divId1"),'EricPink');//--暗主图 \ light--亮主题
+    var mCharts2=echarts.init(document.getElementById("divId2"),'EricPink');//--暗主图 \ light--亮主题
+    option1 = {//配置项参考官方文档：https://echarts.apache.org/zh/option.html#title
+      animation:true,//开启动画
+      //animationDuration:1000,//设置动画时间1000毫秒
+      animationDuration:function(arg){//设置动画效果时间的回调函数
+        console.log(arg);
+        return arg*2000;
+      },
+      animationEasing:'bounceOut',//缓动动画
       title:{text:"成绩"},
       dataZoom:[
         {//添加数据筛选滑块
@@ -23,7 +32,7 @@
         type:'slider', //inside--滚轮滚动缩放
           yAxisIndex:0,//声明为y轴设置筛选缩放
           start:0,
-          end:50//设置筛选缩放的起始和结束为0~50%
+          end:100//设置筛选缩放的起始和结束为0~50%
       }
       ],
       grid:{//设置边框网格
@@ -86,7 +95,20 @@
         },
         satck:'all',//追加堆叠
         areaStyle:{//填充风格
-          color:'black'
+          color:'pink'
+        },
+        itemStyle:{//圆形渐变
+          color:{
+            type:'radial',
+            x:0.5,
+            y:0.5,
+            r:0.5,
+            colorStops:[{
+              offset:0,color:'red'
+            },{
+              offset:1,color:'green'
+            }]
+          }
         }
       },{
         name:"数学呢",
@@ -100,7 +122,21 @@
         areaStyle:{//填充风格
           color:'pink'
         },
-        satck:'all'//追加堆叠
+        satck:'all',//追加堆叠
+        itemStyle:{//线性渐变
+          color:{
+            type:'linear',
+            x:0,
+            y:0,
+            x2:1,
+            y2:1,
+            colorStops:[{
+              offset:0,color:'red'//%0处的颜色
+            },{
+              offset:1,color:'blue'//%0处的颜色
+            }]
+          }
+        }
       }
     ],
       tooltip:{//鼠标移入或点击
@@ -125,7 +161,69 @@
         data:['语文呢','数学呢']
       }
     };
-    mCharts.setOption(option)
+    option2 = {
+      animation:true,//开启动画
+      //animationDuration:1000,//设置动画时间1000毫秒
+      animationDuration:function(arg){//设置动画效果时间的回调函数
+        //console.log(arg);
+        return arg;
+      },
+      animationEasing:'bounceOut',//缓动动画
+        title: {
+            text: '某站点用户访问来源',
+            subtext: '纯属虚构',
+            left: 'center'
+        },
+        tooltip: {
+            trigger: 'item'
+        },
+        legend: {
+            orient: 'vertical',
+            left: 'left',
+        },
+        series: [
+            {
+                name: '访问来源',
+                type: 'pie',
+                // radius: '50%',//整圆半径
+                radius:['25%','50%'],//圆环--内圆半径和外圆半径
+                roseType:'radius',//设置为南丁格尔图：每个扇形半径不一样
+                selectedMode:'single',//设置点击某块扇形后偏离圆心一段距离，'multiple'--可多个同时偏离
+                selectedOffset:30,
+                label:{//显示文字
+                  show:true,
+                  formatter:function(arg){
+                    return arg.name+":"+arg.value;
+                  }
+                },//饼图文字显示
+                data: [
+                    {value: 1048, name: '搜索引擎'},
+                    {value: 735, name: '直接访问'},
+                    {value: 580, name: '邮件营销'},
+                    {value: 484, name: '联盟广告'},
+                    {value: 300, name: '视频广告'}
+                ],
+                emphasis: {//鼠标滑过样式
+                    itemStyle: {
+                        shadowBlur: 100,
+                        shadowOffsetX: 10,
+                        shadowColor: 'rgba(0, 0, 0, 1)'
+                    },
+                    label:{
+                      color:'red'
+                    }
+                }
+            }
+        ]
+    };
+    mCharts1.setOption(option1)
+    mCharts2.setOption(option2)
+    echarts.connect([mCharts1,mCharts2])
+    window.onresize=function(){
+      //调用echarts的resize()方法重新设置大小
+      console.log("resize");
+      mCharts.resize();
+    }
   </script>
 </body>
 </html>

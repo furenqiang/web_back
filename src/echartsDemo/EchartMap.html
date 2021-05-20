@@ -9,10 +9,12 @@
 <script src="../assets/tools/echarts.min.js"></script>
 <script src="../assets/tools/jquery.min.js"></script>
 <body>
-  <div id="divId" style="width: 800px;height: 600px;border: 1px solid red;"></div>
+  <div id="divId" style="height: 600px;border: 1px solid red;"></div>
   <!--  一定要放在div的下方  -->
   <script>
     var mCharts=echarts.init(document.getElementById("divId"));
+    //加载数据之前显示加载动画
+    mCharts.showLoading();
     var airData=  [{name: '中西区', value: 200.34},
                     {name: '湾仔区', value: 157.48},
                     {name: '东区', value: 316.1},
@@ -33,6 +35,8 @@
                     {name: '离岛区', value: 286.98}];
                     var scatterData=[{value:[114.225965,22.279779]}];
     $.getJSON('../assets/data/echartsMapData/province/xianggang.json',function(res){
+      //加载数据之后隐藏加载动画
+      mCharts.hideLoading();
       echarts.registerMap('xianggang',res);//注册数据res到chinaMap
       var option={
         geo:{
@@ -72,6 +76,13 @@
       }
       mCharts.setOption(option)
     })
+    // window.onresize=function(){//自适应大小设置
+    //   //调用echarts的resize()方法重新设置大小
+    //   console.log("resize");
+    //   mCharts.resize();
+    // }
+    //或者写成
+    window.onresize=mCharts.resize
   </script>
 </body>
 </html>
