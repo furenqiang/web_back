@@ -5,7 +5,7 @@ module.exports = {
   },
   devServer: {
     publicPath: '/',
-    port: 10000, // 端口号
+    port: 10001, // 端口号
     // 如果外网想ip访问 屏蔽掉host
     // host: 'localhost',
     https: false, // https:{type:Boolean}
@@ -20,7 +20,16 @@ module.exports = {
             pathRewrite: {
                 '^/sysApi': '' // 通过pathRewrite重写地址，将前缀/api转为/
             }
-        }
+        },
+        'oneMapApi/': {
+          target: 'http://localhost:3000',
+          //target: 'http://47.97.200.76/sysApi',
+          ws: true,
+          changeOrigin: true,
+          pathRewrite: {
+              '^/oneMapApi': '' // 通过pathRewrite重写地址，将前缀/api转为/
+          }
+      }
     } // 配置多个代理
 },
 assetsDir: 'static'

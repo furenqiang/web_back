@@ -9,6 +9,7 @@ import vuescroll from 'vuescroll';
 import * as echarts from 'echarts';
 import 'echarts-wordcloud';
 import VueAMap from 'vue-amap';
+import './assets/css/global.css';
 // import L from "leaflet";
 // import 'leaflet/dist/leaflet.css';
 // import 'leaflet.pm';

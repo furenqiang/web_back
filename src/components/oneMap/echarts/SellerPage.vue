@@ -1,15 +1,18 @@
-<!-- 一张图 -->
+<!--  -->
 <template>
-  <div></div>
+  <div class="com-page">
+    <Seller></Seller>
+  </div>
 </template>
 
 <script>
+import Seller from './Seller';
 export default {
   data () {
     return {
     };
   },
-  components: {},
+  components: {Seller:Seller},
   computed: {},
   mounted() {},
   created() {},
