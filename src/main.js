@@ -10,6 +10,7 @@ import * as echarts from 'echarts';
 import 'echarts-wordcloud';
 import VueAMap from 'vue-amap';
 import './assets/css/global.css';
+import './assets/font/iconfont.css';
 // import L from "leaflet";
 // import 'leaflet/dist/leaflet.css';
 // import 'leaflet.pm';

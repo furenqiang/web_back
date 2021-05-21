@@ -60,7 +60,7 @@ export default {
     width: 100%;
     height: 600px;
     position: relative;
-    top: 5px;
+    top: 7px;
     left: 201px;
   }
 </style>

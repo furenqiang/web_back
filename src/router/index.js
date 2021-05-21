@@ -11,6 +11,8 @@ import AMap from "../components/entertainment/AMap";
 import leafletMap from "../components/entertainment/LeafletMap";
 import oneMap from "../components/oneMap/OneMap";
 import sellerPage from "../components/oneMap/echarts/SellerPage";
+import trendPage from "../components/oneMap/echarts/TrendPage";
+import mapPage from "../components/oneMap/echarts/MapPage";
 import menu from "../components/menu/Menu";
 import {test} from "../request/sysApi";
 import store from "../store/index";
@@ -115,6 +117,22 @@ const router= new Router({
       path: "/sellerPage",
       // component: 组件类名,
       component: sellerPage
+    }, 
+    {
+      // name:"路由别名",
+      name: "trendPage",
+      // path: "路由地址",
+      path: "/trendPage",
+      // component: 组件类名,
+      component: trendPage
+    }, 
+    {
+      // name:"路由别名",
+      name: "mapPage",
+      // path: "路由地址",
+      path: "/mapPage",
+      // component: 组件类名,
+      component: mapPage
     }
   ]
 });

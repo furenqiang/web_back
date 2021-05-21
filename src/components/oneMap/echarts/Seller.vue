@@ -1,7 +1,7 @@
 <!--  -->
 <template>
   <div class="com-container">
-    <div class="com-chart" id="sellerId"></div>
+    <div class="com-chart" id="sellerId" ref="seller_ref"></div>
   </div>
 </template>
 
@@ -22,11 +22,65 @@ export default {
   mounted() {
     this.initChart()
     this.getData()
+    window.addEventListener('resize',this.screenAdapter)
+    this.screenAdapter()
   },
   created() {},
   methods: {
     initChart(){
-      this.chartInstance=this.$echarts.init(document.getElementById('sellerId'))
+      this.chartInstance=this.$echarts.init(document.getElementById('sellerId'),'chalk')
+      const initOption={
+        title:{
+          text:'📕商家销售统计',
+          textStyle:{
+            fontSize:25
+          },
+          top:10,
+          left:5  
+        },
+        xAxis:{
+          type:'value'
+        },
+        yAxis:{
+          type:'category'
+        },
+        series:[
+          {
+            type:'bar',
+            barWidth:65,
+            label:{
+              show:true,
+              position:'right',
+              textStyle:{
+                color:'red'
+              }
+            },
+            itemStyle:{
+              barBorderRadius:[0,33,33,0],
+              //设置线性渐变，参数分别代表x1,y1,x2,y2,[颜色值],如下,代表从(0,0)到(0,1)方向
+              color:new this.$echarts.graphic.LinearGradient(0,0,1,0,[{
+                offset:0,//百分之0下的颜色值
+                color:'#5052EE'
+              },{
+                offset:1,
+                color:'#AB6EE5'
+              }])
+            }
+          }
+        ],
+        tooltip:{
+          trigger:'axis',
+          axisPointer:{
+            type:'line',
+            lineStyle:{
+              width:60,
+              color:'#bbd9f5'
+            },
+            z:0
+          }
+        }
+      }
+      this.chartInstance.setOption(initOption)
       this.chartInstance.on('mouseover',()=>{
         clearInterval(this.intarvalId)
       })
@@ -57,22 +111,17 @@ export default {
       const sellerValues=showData.map((item)=>{
         return item.value
       })
-      const option={
-        xAxis:{
-          type:'value'
-        },
+      const dataOption={
         yAxis:{
-          type:'category',
           data:sellerNames
         },
         series:[
           {
-            type:'bar',
             data:sellerValues
           }
         ]
       }
-      this.chartInstance.setOption(option)
+      this.chartInstance.setOption(dataOption)
     },
     startInterval(){
       if(this.intarvalId){
@@ -85,12 +134,43 @@ export default {
         }
         this.updateChart()
       },3000)
+    },
+    screenAdapter(){
+      const titleFontSize=this.$refs.seller_ref.offsetWidth/100*3.6
+      const adapterOption={
+          title:{
+          textStyle:{
+            fontSize:titleFontSize/2
+          }, 
+        },
+        series:[
+          {
+            barWidth:titleFontSize,
+            itemStyle:{
+              barBorderRadius:[0,titleFontSize/2,titleFontSize/2,0]
+            }
+          }
+        ],
+        tooltip:{
+          axisPointer:{
+            lineStyle:{
+              width:titleFontSize
+            }
+          }
+        }
+      }
+      this.chartInstance.setOption(adapterOption)
+      this.chartInstance.resize()
     }
   },
   destroyed(){
     clearInterval(this.intarvalId)
+    window.removeEventListener('resize',this.screenAdapter)
   }
 }
 </script>
 <style scoped>
+  #sellerId {
+    background-color: #9cc6ee;
+  }
 </style>
