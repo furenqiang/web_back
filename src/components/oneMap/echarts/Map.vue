@@ -112,14 +112,12 @@ export default {
       this.getData()
       // 进入省份事件函数
       this.chartInstance.on('click', e => {
-        console.log('地图被点击了', e)
         // 通过工具函数拿到点击的地图对应的中文拼音(key),和拼接出需要的文件路径(path)
         const ProvinceInfo = getProvinceMapInfo(e.name)
 
       //   // 先判断是否已经存在需要请求的数据
         if (!this.cityMapData[ProvinceInfo.key]) {
           // 不存在： 发送请求,获取点击的地图的矢量数据
-          console.log(ProvinceInfo.path);
           const res = getProvinceData({data:ProvinceInfo.path})
           
           // 把请求到的数据保存下来
