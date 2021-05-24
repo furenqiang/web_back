@@ -13,6 +13,8 @@ import oneMap from "../components/oneMap/OneMap";
 import sellerPage from "../components/oneMap/echarts/SellerPage";
 import trendPage from "../components/oneMap/echarts/TrendPage";
 import mapPage from "../components/oneMap/echarts/MapPage";
+import rankPage from "../components/oneMap/echarts/RankPage";
+import hotPage from "../components/oneMap/echarts/HotPage";
 import menu from "../components/menu/Menu";
 import {test} from "../request/sysApi";
 import store from "../store/index";
@@ -133,6 +135,22 @@ const router= new Router({
       path: "/mapPage",
       // component: 组件类名,
       component: mapPage
+    }, 
+    {
+      // name:"路由别名",
+      name: "rankPage",
+      // path: "路由地址",
+      path: "/rankPage",
+      // component: 组件类名,
+      component: rankPage
+    }, 
+    {
+      // name:"路由别名",
+      name: "hotPage",
+      // path: "路由地址",
+      path: "/hotPage",
+      // component: 组件类名,
+      component: hotPage
     }
   ]
 });

@@ -21,8 +21,18 @@ export const getMapData = (params) => {
      return get(oneMapApi+"/map",params.data);
 }
 
-//获取销量map数据
+//获取销量省份数据
 export const getProvinceData = (params) => {//
      return get(oneMapApi+params.data,null);
+}
+
+//获取销量rank数据
+export const getRankData = (params) => {//
+     return get(oneMapApi+"/rank",params.data);
+}
+
+//获取销量hot数据
+export const getHotData = (params) => {//
+     return get(oneMapApi+"/hotproduct",params.data);
 }
 

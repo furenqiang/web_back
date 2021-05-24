@@ -1,5 +1,5 @@
 <template>
-  <div class="com-container" >
+  <div class="com-container" @dblclick="chinaMap">
     <div class="com-chart" ref="mapRef" id="mapId"></div>
   </div>
 </template>
@@ -88,7 +88,6 @@ export default {
           map: 'china',
           top: '5%',
           bottom: '5%',
-          left:'16%',
           //允许拖动及缩放
           roam: true,
           // zoom: 1.1, //默认缩放比例
@@ -115,25 +114,35 @@ export default {
         // 通过工具函数拿到点击的地图对应的中文拼音(key),和拼接出需要的文件路径(path)
         const ProvinceInfo = getProvinceMapInfo(e.name)
 
-      //   // 先判断是否已经存在需要请求的数据
+        // 先判断是否已经存在需要请求的数据
         if (!this.cityMapData[ProvinceInfo.key]) {
           // 不存在： 发送请求,获取点击的地图的矢量数据
-          const res = getProvinceData({data:ProvinceInfo.path})
-          
-          // 把请求到的数据保存下来
-          this.cityMapData[ProvinceInfo.key] = res
-          // 注册点击的地图
-          this.$echarts.registerMap(ProvinceInfo.key, res)
+          getProvinceData({data:ProvinceInfo.path}).then((res)=>{
+            // 注册点击的地图
+            this.$echarts.registerMap(ProvinceInfo.key, res)
+            // 设置最新的配置项
+            const changeOption = {
+              geo: {
+                map: ProvinceInfo.key,
+                center:res.features[0].properties.cp,
+              },
+            }
+            // 赋值给 echarts实例
+            this.chartInstance.setOption(changeOption)
+            // 把请求到的数据保存下来
+            this.cityMapData[ProvinceInfo.key] = res
+          })
+        }else{
+          // //   // 设置最新的配置项
+          const changeOption = {
+            geo: {
+              map: ProvinceInfo.key,
+              center:this.cityMapData[ProvinceInfo.key].features[0].properties.cp
+            },
+          }
+          // 赋值给 echarts实例
+          this.chartInstance.setOption(changeOption)
         }
-
-      // //   // 设置最新的配置项
-      //   const changeOption = {
-      //     geo: {
-      //       map: ProvinceInfo.key,
-      //     },
-      //   }
-      //   // 赋值给 echarts实例
-      //   this.chartInstance.setOption(changeOption)
       })
     },
     // 发送请求，获取数据
@@ -219,14 +228,14 @@ export default {
       this.chartInstance.resize()
     },
     // 回到中国地图
-    // chinaMap() {
-    //   const chinaMapOption = {
-    //     geo: {
-    //       map: 'china',
-    //     },
-    //   }
-    //   this.chartInstance.setOption(chinaMapOption)
-    // },
+    chinaMap() {
+      const chinaMapOption = {
+        geo: {
+          map: 'china',
+        },
+      }
+      this.chartInstance.setOption(chinaMapOption)
+    },
   },
 }
 </script>

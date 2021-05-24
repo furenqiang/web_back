@@ -1,7 +1,7 @@
 <template>
   <div class="com-container">
     <div class="title" :style="comStyle">
-      <span class="before-icon" @click="showChoice=!showChoice">💴{{showTitle}}</span>
+      <span class="before-icon" @click="showChoice=!showChoice">📈{{showTitle}}</span>
       <span class="iconfont title-icon" @click="showChoice=!showChoice" :style="comStyle">&#xe6eb;</span>
       <div class="select-con" v-show="showChoice" :style="marginStyle">
         <div class="select-item" v-for="item in selectTypes" :key="item.key" @click="handleSelect(item.key)">
