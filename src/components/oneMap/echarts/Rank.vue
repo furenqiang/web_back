@@ -30,17 +30,17 @@ export default {
     //...mapState(['theme']),
   },
   watch: {
-    theme() {
-      console.log('主题切换了')
-      // 销毁当前的图表
-      this.chartInstance.dispose()
-      // 以最新主题初始化图表对象
-      this.initChart()
-      // 屏幕适配
-      this.screenAdapter()
-      // 渲染数据
-      this.updateChart()
-    },
+    // theme() {
+    //   console.log('主题切换了')
+    //   // 销毁当前的图表
+    //   this.chartInstance.dispose()
+    //   // 以最新主题初始化图表对象
+    //   this.initChart()
+    //   // 屏幕适配
+    //   this.screenAdapter()
+    //   // 渲染数据
+    //   this.updateChart()
+    // },
   },
   mounted() {
     this.initChart()
