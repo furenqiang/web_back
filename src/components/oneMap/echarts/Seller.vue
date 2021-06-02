@@ -6,7 +6,8 @@
 </template>
 
 <script>
-import {getSellerData} from '../../../request/oneMapApi'
+//import {getSellerData} from '../../../request/oneMapApi'
+import { mapState } from 'vuex'
 export default {
   data () {
     return {
@@ -18,10 +19,20 @@ export default {
     };
   },
   components: {},
-  computed: {},
+  computed: {
+  },
+  watch:{
+  },
   mounted() {
     this.initChart()
-    this.getData()
+    this.$socket.registerCallBack('sellerData',this.getData)
+    //this.getData()
+    this.$socket.send({
+      action: 'getData',
+      socketType: 'sellerData',
+      chartName: 'seller',
+      value: '',
+    })
     window.addEventListener('resize',this.screenAdapter)
     this.screenAdapter()
   },
@@ -78,6 +89,9 @@ export default {
             },
             z:0
           }
+        },
+        grid:{
+          height:'50%'
         }
       }
       this.chartInstance.setOption(initOption)
@@ -88,18 +102,25 @@ export default {
         this.startInterval()
       })
     },
-    getData(){
-      getSellerData({
-        data:null
-      }).then((res)=>{
-        this.chartData=res
-        this.chartData.sort((a,b)=>{
-          return a.value-b.value
-        })
-        this.totalPage= this.chartData.length%5==0?this.chartData.length/5:this.chartData.length/5+1
-        this.updateChart()
-        this.startInterval()
+    getData(res){
+      // getSellerData({
+      //   data:null
+      // }).then((res)=>{
+      //   this.chartData=res
+      //   this.chartData.sort((a,b)=>{
+      //     return a.value-b.value
+      //   })
+      //   this.totalPage= this.chartData.length%5==0?this.chartData.length/5:this.chartData.length/5+1
+      //   this.updateChart()
+      //   this.startInterval()
+      // })
+      this.chartData=res
+      this.chartData.sort((a,b)=>{
+        return a.value-b.value
       })
+      this.totalPage= this.chartData.length%5==0?this.chartData.length/5:this.chartData.length/5+1
+      this.updateChart()
+      this.startInterval()
     },
     updateChart(){
       const start=(this.currentPage-1)*5
@@ -140,12 +161,12 @@ export default {
       const adapterOption={
           title:{
           textStyle:{
-            fontSize:titleFontSize/2
+            fontSize:titleFontSize/1.2
           }, 
         },
         series:[
           {
-            barWidth:titleFontSize,
+            barWidth:titleFontSize/2,
             itemStyle:{
               barBorderRadius:[0,titleFontSize/2,titleFontSize/2,0]
             }
@@ -166,6 +187,7 @@ export default {
   destroyed(){
     clearInterval(this.intarvalId)
     window.removeEventListener('resize',this.screenAdapter)
+    this.$socket.unRegisterCallBack('sellerData')
   }
 }
 </script>

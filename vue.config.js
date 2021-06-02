@@ -22,8 +22,8 @@ module.exports = {
             }
         },
         'oneMapApi/': {
-          target: 'http://localhost:3000',
-          //target: 'http://47.97.200.76/sysApi',
+          //target: 'http://localhost:3000',
+          target: 'http://47.97.200.76/oneMapApi',
           ws: true,
           changeOrigin: true,
           pathRewrite: {
@@ -32,7 +32,7 @@ module.exports = {
       }
     } // 配置多个代理
 },
-assetsDir: 'static'
+assetsDir: 'static',
 };
 
 

@@ -10,7 +10,7 @@
 <script>
 //import { getThemeValue } from 'utils/theme_utils'
 //import _ from 'lodash'
-import {getHotData} from '../../../request/oneMapApi'
+//import {getHotData} from '../../../request/oneMapApi'
 
 export default {
   name: 'Hot',
@@ -27,7 +27,7 @@ export default {
     }
   },
   created() {
-    //this.$socket.registerCallBack('hotData', this.getData)
+    this.$socket.registerCallBack('hotData', this.getData)
   },
   computed: {
     cateName() {
@@ -60,19 +60,19 @@ export default {
   mounted() {
     this.initChart()
     // this.getData()
-    // this.$socket.send({
-    //   action: 'getData',
-    //   socketType: 'hotData',
-    //   chartName: 'hotproduct',
-    //   value: '',
-    // })
+    this.$socket.send({
+      action: 'getData',
+      socketType: 'hotData',
+      chartName: 'hotproduct',
+      value: '',
+    })
     window.addEventListener('resize', this.screenAdapter)
     // 主动触发 响应式配置
     this.screenAdapter()
   },
   destroyed() {
     window.removeEventListener('resize', this.screenAdapter)
-    //this.$socket.unRegisterCallBack('hotData')
+    this.$socket.unRegisterCallBack('hotData')
   },
   methods: {
     // 初始化图表的方法
@@ -128,14 +128,16 @@ export default {
         ],
       }
       this.chartInstance.setOption(initOption)
-      this.getData()
+      //this.getData()
     },
     // 发送请求，获取数据
-    getData() {
-      getHotData({data:null}).then((res)=>{
-        this.allData = res
-        this.updateChart()
-      })
+    getData(res) {
+      // getHotData({data:null}).then((res)=>{
+      //   this.allData = res
+      //   this.updateChart()
+      // })
+      this.allData = res
+      this.updateChart()
     },
     // 更新图表配置项
     updateChart() {
@@ -167,16 +169,16 @@ export default {
       const adapterOption = {
         title: {
           textStyle: {
-            fontSize: this.titleFontSize/3,
+            fontSize: this.titleFontSize/2,
           },
         },
         legend: {
-          itemWidth: this.titleFontSize/3,
-          itemHeight: this.titleFontSize/3,
+          itemWidth: this.titleFontSize/2,
+          itemHeight: this.titleFontSize/2,
           // 图例的间隔
           itemGap: this.titleFontSize / 2,
           textStyle: {
-            fontSize: this.titleFontSize / 3,
+            fontSize: this.titleFontSize / 1.2,
           },
         },
         series: [

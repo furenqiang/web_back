@@ -16,7 +16,7 @@
 <script>
 //import { mapState } from 'vuex'
 //import { getThemeValue } from '../../../utils/theme_utils'
-import {getTrendData} from '../../../request/oneMapApi'
+//import {getTrendData} from '../../../request/oneMapApi'
 
 export default {
   // 地区销量趋势
@@ -38,7 +38,7 @@ export default {
   },
   created() {
     // 在组件创建完成之后，进行回调函数的注册
-    //his.$socket.registerCallBack('trendData', this.getData)
+    this.$socket.registerCallBack('trendData', this.getData)
   },
   computed: {
     // ...mapState(['theme']),
@@ -57,7 +57,7 @@ export default {
     // // 设置给标题的样式
     comStyle() {
       return {
-        fontSize: this.titleFontSize/3 + 'px',
+        fontSize: this.titleFontSize + 'px',
         //color: getThemeValue(this.theme).titleColor,
       }
     },
@@ -80,14 +80,13 @@ export default {
   },
   mounted() {
     this.initChart()
-    this.getData()
     // websocket 请求数据
-    // this.$socket.send({
-    //   action: 'getData',
-    //   socketType: 'trendData',
-    //   chartName: 'trend',
-    //   value: '',
-    // })
+    this.$socket.send({
+      action: 'getData',
+      socketType: 'trendData',
+      chartName: 'trend',
+      value: '',
+    })
     window.addEventListener('resize', this.screenAdapter)
     // 第一次进入页面时，主动触发 响应式配置
     this.screenAdapter()
@@ -95,7 +94,7 @@ export default {
   destroyed() {
     window.removeEventListener('resize', this.screenAdapter)
     // 销毁注册的事件
-    //this.$socket.unRegisterCallBack('trendData')
+    this.$socket.unRegisterCallBack('trendData')
   },
   methods: {
     // 初始化图表的方法
@@ -134,15 +133,17 @@ export default {
       this.chartInstance.setOption(initOption)
     },
     // 发送请求，获取数据  //websocket： realData 服务端发送给客户端需要的数据
-    getData() {
-      getTrendData(
-        {
-          data:null
-        }
-      ).then((res)=>{
-        this.allData = res
-        this.updateChart()
-      })
+    getData(res) {
+      // getTrendData(
+      //   {
+      //     data:null
+      //   }
+      // ).then((res)=>{
+      //   this.allData = res
+      //   this.updateChart()
+      // })
+      this.allData = res
+      this.updateChart()
     },
     // 更新图表配置项
     updateChart() {
@@ -203,12 +204,12 @@ export default {
 
       const adapterOption = {
         legend: {
-          itemWidth: this.titleFontSize/3,
-          itemHeight: this.titleFontSize/3,
+          itemWidth: this.titleFontSize/1.5,
+          itemHeight: this.titleFontSize/1.5,
           // 间距
           itemGap: this.titleFontSize,
           textStyle: {
-            fontSize: this.titleFontSize /3,
+            fontSize: this.titleFontSize /1.5,
           },
         },
       }

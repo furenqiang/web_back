@@ -17,7 +17,7 @@
   .aClass {
     text-align: center;
     position: relative;
-    top: 38%;
+    top: 22%;
   }
 </style>
 

@@ -6,7 +6,7 @@
 
 <script>
 //import { mapState } from 'vuex'
-import {getRankData} from '../../../request/oneMapApi'
+//import {getRankData} from '../../../request/oneMapApi'
 export default {
   name: 'Rank',
   data() {
@@ -24,12 +24,12 @@ export default {
     }
   },
   created() {
-    //this.$socket.registerCallBack('rankData', this.getData)
+    this.$socket.registerCallBack('rankData', this.getData)
   },
   computed: {
     //...mapState(['theme']),
   },
-  watch: {
+  watch : {
     // theme() {
     //   console.log('主题切换了')
     //   // 销毁当前的图表
@@ -45,12 +45,12 @@ export default {
   mounted() {
     this.initChart()
     // this.getData()
-    // this.$socket.send({
-    //   action: 'getData',
-    //   socketType: 'rankData',
-    //   chartName: 'rank',
-    //   value: '',
-    // })
+    this.$socket.send({
+      action: 'getData',
+      socketType: 'rankData',
+      chartName: 'rank',
+      value: '',
+    })
     window.addEventListener('resize', this.screenAdapter)
     // 主动触发 响应式配置
     this.screenAdapter()
@@ -58,7 +58,7 @@ export default {
   destroyed() {
     window.removeEventListener('resize', this.screenAdapter)
     clearInterval(this.timerId)
-    //this.$socket.unRegisterCallBack('rankData')
+    this.$socket.unRegisterCallBack('rankData')
   },
   methods: {
     // 初始化图表的方法
@@ -69,7 +69,7 @@ export default {
         title: {
           text: '📊地区销售排行',
           left: 20, 
-          top: 20,
+          top: 10,
         },
         grid: {
           top: '20%',
@@ -78,6 +78,7 @@ export default {
           bottom: '5%',
           // 把x轴和y轴纳入 grid
           containLabel: true,
+          height:'80%',
           width:'80%'
         },
         tooltip: {
@@ -102,7 +103,7 @@ export default {
         ],
       }
       this.chartInstance.setOption(initOption)
-      this.getData()
+      //this.getData()
       // 鼠标经过关闭 动画效果
       this.chartInstance.on('mouseover', () => {
         clearInterval(this.timerId)
@@ -113,16 +114,21 @@ export default {
       })
     },
     // 发送请求，获取数据
-    getData() {
-      getRankData({data:null}).then((res)=>{
+    getData(res) {
+      // getRankData({data:null}).then((res)=>{
+      // this.allData = res
+      // // 对数据进行排序(大到小)
+      // this.allData.sort((a, b) => b.value - a.value)
+      // this.updateChart()
+      // // 开始自动切换
+      // this.startInterval()
+      // })
       this.allData = res
       // 对数据进行排序(大到小)
       this.allData.sort((a, b) => b.value - a.value)
       this.updateChart()
       // 开始自动切换
       this.startInterval()
-      })
-      
     },
     // 更新图表配置项
     updateChart() {
@@ -181,7 +187,7 @@ export default {
       const adapterOption = {
         title: {
           textStyle: {
-            fontSize: titleFontSzie/3,
+            fontSize: titleFontSzie/2,
           },
         },
         series: [

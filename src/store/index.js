@@ -23,7 +23,11 @@ const store= new Vuex.Store({
     },
     login:{
       show:true
-    }
+    },
+    oneMap:{
+      show:false,
+    },
+    theme:'chalk'
   },
   mutations:{
     handleTabsAdd(state,params){
@@ -59,6 +63,9 @@ const store= new Vuex.Store({
     changeLoginShow(state,params){
       state.login.show=params.show
     },
+    changeOneMapShow(state,params){
+      state.oneMap.show=params.show
+    },
     restoreState(state){
       state.headerTab.editableTabs= [{
         title: '首页',
@@ -70,6 +77,13 @@ const store= new Vuex.Store({
       state.headerTab.editableTabsValue="0",
       state.headerTab.tabIndex=0,
       state.navMenu.menu.defaultActive=""
+    },
+    changeOneMapTheme(state){
+      if(state.theme==='chalk'){
+        state.theme='vintage'
+      }else{
+        state.theme='chalk'
+      }
     }
   }
 });

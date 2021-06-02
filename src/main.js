@@ -11,6 +11,7 @@ import 'echarts-wordcloud';
 import VueAMap from 'vue-amap';
 import './assets/css/global.css';
 import './assets/font/iconfont.css';
+import WebSocketService from './utils/websocket_utils'
 // import L from "leaflet";
 // import 'leaflet/dist/leaflet.css';
 // import 'leaflet.pm';
@@ -37,6 +38,11 @@ VueAMap.initAMapApiLoader({
   v: '1.4.4',
   uiVersion: '1.0'
 })
+
+//websocket的连接并监听
+WebSocketService.Instance.connect()
+//websocket注册全局组件,可在其他页面使用this.socket来获取到WebSocketService对象
+Vue.prototype.$socket = WebSocketService.Instance
 
 new Vue({
   router,

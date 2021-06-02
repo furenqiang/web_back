@@ -4,7 +4,7 @@
         <img :src="imgSrc" width="100%" height="100%" alt="" />
     </div>
     <Header v-if="!show"></Header>
-    <div class="routerView">
+    <div :class="{routerView:isRouterView,oneMap:oneMap}">
       <keep-alive>
         <router-view />
       </keep-alive>
@@ -22,7 +22,8 @@ export default {
   name: "App",
   data() {
     return {
-      imgSrc:require('./assets/img/background.png')
+      imgSrc:require('./assets/img/background.png'),
+      isRouterView:true
     };
   },
   components: {
@@ -35,12 +36,18 @@ export default {
       get:function(){
         return this.$store.state.login.show
       }
-    }
+    },
+    oneMap:{
+      get:function(){
+        return this.$store.state.oneMap.show
+      }
+    },
+    
   }
 };
 </script>
 
-<style>
+<style lang="less">
   body{
     height :750px;
     padding: 0;
@@ -54,13 +61,19 @@ export default {
     z-index: -9999;
     position: absolute;
   }
-
-   .routerView{
+  .routerView{
     background-color:#fde7ef;
     width: 100%;
     height: 600px;
     position: relative;
     top: 7px;
     left: 201px;
+  }
+  .oneMap{
+    height: 750px;
+    width: 100%;
+    left: 0px;
+    top:-68px;
+    z-index: 9999;
   }
 </style>

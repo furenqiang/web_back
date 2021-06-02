@@ -15,6 +15,7 @@ import trendPage from "../components/oneMap/echarts/TrendPage";
 import mapPage from "../components/oneMap/echarts/MapPage";
 import rankPage from "../components/oneMap/echarts/RankPage";
 import hotPage from "../components/oneMap/echarts/HotPage";
+import stockPage from "../components/oneMap/echarts/StockPage";
 import menu from "../components/menu/Menu";
 import {test} from "../request/sysApi";
 import store from "../store/index";
@@ -151,6 +152,14 @@ const router= new Router({
       path: "/hotPage",
       // component: 组件类名,
       component: hotPage
+    }, 
+    {
+      // name:"路由别名",
+      name: "stockPage",
+      // path: "路由地址",
+      path: "/stockPage",
+      // component: 组件类名,
+      component: stockPage
     }
   ]
 });

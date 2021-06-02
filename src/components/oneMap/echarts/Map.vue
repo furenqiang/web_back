@@ -6,8 +6,7 @@
 
 <script>
 import { getProvinceMapInfo } from '../../../utils/map_utils'
-import {getChainJson,getMapData,getProvinceData} from '../../../request/oneMapApi'
-//import { mapState } from 'vuex'
+import {getChainJson,getProvinceData} from '../../../request/oneMapApi'
 
 export default {
   name: 'Map',
@@ -26,41 +25,21 @@ export default {
     }
   },
   computed: {
-    // ...mapState(['theme']),
-  },
-  watch: {
-    // theme() {
-    //   console.log('主题切换了')
-    //   // 销毁当前的图表
-    //   this.chartInstance.dispose()
-    //   // 以最新主题初始化图表对象
-    //   this.initChart()
-    //   // 屏幕适配
-    //   this.screenAdapter()
-    //   // 渲染数据
-    //   this.updateChart()
-    // },
   },
   created() {
     // this.axiosInstance = axios.create({
     //   baseURL:'http://120.53.120.229:9997'
     // })
-    // this.$socket.registerCallBack('mapData', this.getData)
+    this.$socket.registerCallBack('mapData', this.getData)
   },
   mounted() {
     this.getChinaJson()
-    // this.$socket.send({
-    //   action: 'getData',
-    //   socketType: 'mapData',
-    //   chartName: 'map',
-    //   value: '',
-    // })
     window.addEventListener('resize', this.screenAdapter)
     
   },
   destroyed() {
     window.removeEventListener('resize', this.screenAdapter)
-    //this.$socket.unRegisterCallBack('stockData')
+    this.$socket.unRegisterCallBack('stockData')
   },
   methods: {
     // 初始化图表的方法
@@ -107,8 +86,8 @@ export default {
       this.chartInstance.setOption(initOption)
       // 主动触发 响应式配置
       this.screenAdapter()
-      //获取散点数据
-      this.getData()
+      //获取散点数据,已转成websocket实现
+      //this.getData()
       // 进入省份事件函数
       this.chartInstance.on('click', e => {
         // 通过工具函数拿到点击的地图对应的中文拼音(key),和拼接出需要的文件路径(path)
@@ -144,6 +123,12 @@ export default {
           this.chartInstance.setOption(changeOption)
         }
       })
+      this.$socket.send({
+        action: 'getData',
+        socketType: 'mapData',
+        chartName: 'map',
+        value: '',
+      })
     },
     // 发送请求，获取数据
     getChinaJson() {
@@ -151,14 +136,18 @@ export default {
         // http://127.0.0.1:8888/api/map
         // const { data: res } = await this.$http.get('/map')
         this.chinaJson = res
-        this.initChart()
+        this.$nextTick(()=>{
+          this.initChart()
+        })
       })
     },
-    getData(){
-      getMapData({data:null}).then((res)=>{
-        this.allData=res
-        this.updateChart()
-      })
+    getData(res){
+      // getMapData({data:null}).then((res)=>{
+      //   this.allData=res
+      //   this.updateChart()
+      // })
+      this.allData=res
+      this.updateChart()
     },
     // 更新图表配置项
     updateChart() {
@@ -198,7 +187,7 @@ export default {
         },
         series: seriesArr,
       }
-      this.chartInstance.setOption(dataOption)
+      if(this.chartInstance)this.chartInstance.setOption(dataOption)
     },
     // 不同分辨率的响应式
     screenAdapter() {
@@ -209,18 +198,18 @@ export default {
       const adapterOption = {
         title: {
           textStyle: {
-            fontSize: titleFontSize/3,
+            fontSize: titleFontSize/2,
           },
         },
         legend: {
           // 图例宽度
-          itemWidth: titleFontSize / 3,
+          itemWidth: titleFontSize / 2,
           // 图例高度
-          itemHeight: titleFontSize / 3,
+          itemHeight: titleFontSize / 2,
           // 间隔
           itemGap: titleFontSize / 3,
           textStyle: {
-            fontSize: titleFontSize / 3,
+            fontSize: titleFontSize / 2,
           },
         },
       }
